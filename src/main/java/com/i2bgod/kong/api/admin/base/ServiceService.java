@@ -46,7 +46,7 @@ public interface ServiceService {
     Service putByPlugin(@Param("pluginId") String pluginId, Service service);
 
     @RequestLine("DELETE /services/{nameOrId}")
-    Service delete(@Param("nameOrId") String nameOrId, Service service);
+    void delete(@Param("nameOrId") String nameOrId);
     @RequestLine("DELETE /routes/{routeNameOrId}/service")
-    Service deleteByRoute(@Param("routeNameOrId") String routeNameOrId, Service service);
+    void deleteByRoute(@Param("routeNameOrId") String routeNameOrId);
 }

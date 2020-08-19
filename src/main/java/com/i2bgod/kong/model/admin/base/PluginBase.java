@@ -3,6 +3,7 @@ package com.i2bgod.kong.model.admin.base;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @date: 05/08/2020
  */
 @NoArgsConstructor
+@ToString(callSuper = true)
 @Data
 public class PluginBase extends TagBase {
 
