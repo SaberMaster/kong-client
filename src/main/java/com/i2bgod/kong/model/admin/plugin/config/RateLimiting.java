@@ -1,6 +1,7 @@
 package com.i2bgod.kong.model.admin.plugin.config;
 
 import com.google.gson.annotations.SerializedName;
+import com.i2bgod.kong.model.admin.plugin.config.annoation.KongPluginConfig;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

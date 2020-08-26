@@ -1,4 +1,4 @@
-package com.i2bgod.kong.api.admin;
+package com.i2bgod.kong.api.admin.annoation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

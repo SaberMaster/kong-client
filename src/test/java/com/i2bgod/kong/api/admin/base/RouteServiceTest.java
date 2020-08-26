@@ -1,12 +1,14 @@
 package com.i2bgod.kong.api.admin.base;
 
 import com.i2bgod.kong.KongClient;
+import com.i2bgod.kong.TestProperties;
 import com.i2bgod.kong.model.admin.base.Route;
 import com.i2bgod.kong.model.admin.base.page.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.util.Collections;
 
 /**
@@ -18,8 +20,9 @@ class RouteServiceTest {
     private RouteService routeService;
 
     @BeforeEach
-    void setUp() {
-        KongClient kongClientUnderTest = new KongClient( "http://localhost:18001/", null,null , null);
+    void setUp() throws FileNotFoundException {
+        TestProperties testConfig = TestProperties.getTestConfig();
+        KongClient kongClientUnderTest = new KongClient(testConfig.getAdminUrl());
         routeService = kongClientUnderTest.getAdminClient().getService(RouteService.class);
     }
 

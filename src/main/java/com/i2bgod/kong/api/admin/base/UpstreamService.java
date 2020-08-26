@@ -1,6 +1,6 @@
 package com.i2bgod.kong.api.admin.base;
 
-import com.i2bgod.kong.api.admin.KongService;
+import com.i2bgod.kong.api.admin.annoation.KongService;
 import com.i2bgod.kong.model.admin.base.Upstream;
 import com.i2bgod.kong.model.admin.base.UpstreamHealth;
 import com.i2bgod.kong.model.admin.base.page.Page;

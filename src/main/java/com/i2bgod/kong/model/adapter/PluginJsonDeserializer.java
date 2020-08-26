@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.i2bgod.kong.model.admin.base.Plugin;
 import com.i2bgod.kong.model.admin.base.PluginBase;
-import com.i2bgod.kong.utils.PluginUtils;
+import com.i2bgod.kong.util.PluginUtils;
 
 import java.lang.reflect.Type;
 

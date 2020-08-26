@@ -1,7 +1,7 @@
 package com.i2bgod.kong.bean;
 
-import com.i2bgod.kong.api.admin.KongService;
-import com.i2bgod.kong.model.admin.plugin.config.KongPluginConfig;
+import com.i2bgod.kong.api.admin.annoation.KongService;
+import com.i2bgod.kong.model.admin.plugin.config.annoation.KongPluginConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.reflections.Reflections;
 

@@ -1,4 +1,4 @@
-package com.i2bgod.kong.model.admin.plugin.config;
+package com.i2bgod.kong.model.admin.plugin.config.annoation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

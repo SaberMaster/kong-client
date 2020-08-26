@@ -1,11 +1,14 @@
 package com.i2bgod.kong.api.admin.base;
 
 import com.i2bgod.kong.KongClient;
+import com.i2bgod.kong.TestProperties;
 import com.i2bgod.kong.model.admin.base.Node;
 import com.i2bgod.kong.model.admin.base.NodeStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.FileNotFoundException;
 
 /**
  * @author: Lyn
@@ -17,8 +20,9 @@ class NodeServiceTest {
     private NodeService nodeService;
 
     @BeforeEach
-    void setUp() {
-        KongClient kongClientUnderTest = new KongClient( "http://localhost:18001/", null,null , null);
+    void setUp() throws FileNotFoundException {
+        TestProperties testConfig = TestProperties.getTestConfig();
+        KongClient kongClientUnderTest = new KongClient(testConfig.getAdminUrl());
         nodeService = kongClientUnderTest.getAdminClient().getService(NodeService.class);
     }
 

@@ -1,4 +1,4 @@
-package com.i2bgod.kong.utils;
+package com.i2bgod.kong.util;
 
 import com.google.gson.Gson;
 import com.i2bgod.kong.bean.ClientConfig;

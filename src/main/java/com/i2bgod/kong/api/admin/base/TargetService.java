@@ -1,6 +1,6 @@
 package com.i2bgod.kong.api.admin.base;
 
-import com.i2bgod.kong.api.admin.KongService;
+import com.i2bgod.kong.api.admin.annoation.KongService;
 import com.i2bgod.kong.model.admin.base.Target;
 import com.i2bgod.kong.model.admin.base.page.Page;
 import feign.Headers;

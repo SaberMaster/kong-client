@@ -1,4 +1,4 @@
-package com.i2bgod.kong.utils;
+package com.i2bgod.kong.util;
 
 import org.apache.commons.lang3.StringUtils;
 

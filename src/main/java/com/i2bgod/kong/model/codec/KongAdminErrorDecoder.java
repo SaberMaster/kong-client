@@ -1,19 +1,24 @@
 package com.i2bgod.kong.model.codec;
 
+import com.google.gson.JsonSyntaxException;
 import com.i2bgod.kong.exception.KongClientException;
-import com.i2bgod.kong.utils.ConfigUtils;
+import com.i2bgod.kong.util.ConfigUtils;
 import feign.Response;
 import feign.RetryableException;
 import feign.Util;
 import feign.codec.ErrorDecoder;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author: Lyn
  * @date: 07/08/2020
  */
+@Slf4j
 public class KongAdminErrorDecoder implements ErrorDecoder {
     private final ErrorDecoder defaultErrorDecoder = new Default();
 
@@ -24,12 +29,30 @@ public class KongAdminErrorDecoder implements ErrorDecoder {
         if (defaultException instanceof RetryableException) {
             return defaultException;
         }
+        String body = null;
         try {
-            return new KongClientException("kong response error",
-                    response.status(), ConfigUtils.getGson().fromJson(Util.toString(response.body().asReader(Charset.defaultCharset())), Object.class)
-                    );
-        } catch (IOException ignored) {
+            if (null != response.body()) {
+                body = Util.toString(response.body().asReader(Charset.defaultCharset()));
+            }
+        } catch (IOException ioE) {
+            log.warn("io exception", ioE);
+            return new RuntimeException(ioE);
         }
-        return defaultException;
+        try {
+            return new KongClientException(
+                    "kong response error",
+                    response.status(),
+                    ConfigUtils.getGson().fromJson(body, Object.class)
+                    );
+
+        } catch (JsonSyntaxException jsonException) {
+            Map<String, String> errInfo = new HashMap<>(2);
+            errInfo.put("details", body);
+            return new KongClientException(
+                    "kong response error",
+                    response.status(),
+                    errInfo
+            );
+        }
     }
 }
