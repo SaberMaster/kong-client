@@ -1,14 +1,12 @@
 package com.i2bgod.kong.api.admin.base;
 
 import com.i2bgod.kong.api.admin.annoation.KongService;
+import com.i2bgod.kong.model.admin.base.EnabledPlugin;
 import com.i2bgod.kong.model.admin.base.Plugin;
 import com.i2bgod.kong.model.admin.base.page.Page;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
-
-import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -19,7 +17,7 @@ import java.util.Map;
 @Headers("Content-Type: application/json")
 public interface PluginService {
 
-    @RequestLine("POST /routes")
+    @RequestLine("POST /plugins")
     <T> Plugin<T> add(Plugin<T> route);
     @RequestLine("POST /routes/{routeNameOrId}/plugins")
     <T> Plugin<T> addByRoute(@Param("routeNameOrId") String routeNameOrId, Plugin<T> route);
@@ -49,6 +47,6 @@ public interface PluginService {
     @RequestLine("DELETE /plugins/{id}")
     void delete(@Param("id") String id);
 
-    @RequestLine("DELETE /plugins/enabled")
-    Map<String, List<String>> enabled();
+    @RequestLine("GET /plugins/enabled")
+    EnabledPlugin enabled();
 }

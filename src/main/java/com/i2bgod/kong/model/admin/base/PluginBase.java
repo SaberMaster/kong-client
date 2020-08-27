@@ -21,11 +21,11 @@ public class PluginBase extends TagBase {
     @SerializedName("enabled")
     private Boolean enabled;
     @SerializedName("consumer")
-    private String consumer;
+    private Consumer consumer;
     @SerializedName("route")
-    private String route;
+    private Route route;
     @SerializedName("service")
-    private String service;
+    private Service service;
     @SerializedName("protocols")
     private List<String> protocols;
 }

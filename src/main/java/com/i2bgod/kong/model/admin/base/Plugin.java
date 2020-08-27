@@ -2,9 +2,11 @@ package com.i2bgod.kong.model.admin.base;
 
 import com.google.gson.annotations.JsonAdapter;
 import com.i2bgod.kong.model.adapter.PluginJsonDeserializer;
+import com.i2bgod.kong.model.admin.plugin.config.annoation.KongPluginConfig;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author: Lyn
@@ -41,5 +43,16 @@ public class Plugin<T> extends PluginBase {
         this.setName(pluginBase.getName());
         this.setCreateAt(pluginBase.getCreateAt());
         this.setUpdateAt(pluginBase.getUpdateAt());
+    }
+
+    public void setConfig(T config) {
+        this.config = config;
+        if (StringUtils.isBlank(this.getName())) {
+            KongPluginConfig annotation = config.getClass().getAnnotation(KongPluginConfig.class);
+            if (null == annotation) {
+                return;
+            }
+            this.setName(annotation.schemaName());
+        }
     }
 }
