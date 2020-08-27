@@ -5,15 +5,15 @@ import com.i2bgod.kong.api.admin.base.ServiceService;
 import com.i2bgod.kong.exception.KongClientException;
 import com.i2bgod.kong.model.admin.base.Service;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class KongAdminErrorDecoderTest {
 
-    private ServiceService serviceService;
+    private static ServiceService serviceService;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void setUp() {
         KongClient kongClientUnderTest = new KongClient( "http://localhost:18001/");
         serviceService = kongClientUnderTest.getAdminClient().getService(ServiceService.class);
     }

@@ -6,7 +6,7 @@ import com.i2bgod.kong.model.admin.base.Service;
 import com.i2bgod.kong.model.admin.base.page.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -21,10 +21,11 @@ import java.io.FileNotFoundException;
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ServiceServiceTest {
-    private ServiceService serviceService;
+    public static final String TMP_NAME = "test-service";
+    private static ServiceService serviceService;
 
-    @BeforeEach
-    void setUp() throws FileNotFoundException {
+    @BeforeAll
+    static void setUp() throws FileNotFoundException {
         TestProperties testConfig = TestProperties.getTestConfig();
         KongClient kongClientUnderTest = new KongClient(testConfig.getAdminUrl());
         serviceService = kongClientUnderTest.getAdminClient().getService(ServiceService.class);
@@ -32,14 +33,14 @@ class ServiceServiceTest {
 
     @Test
     @Order(1)
-    void testAddService() {
+    void testAdd() {
         Service service = new Service();
         service.setRetries(0);
         service.setUrl("http://127.0.0.1/abc");
         service.setConnectTimeout(1);
         service.setWriteTimeout(1);
         service.setReadTimeout(1);
-        service.setName("test-service");
+        service.setName(TMP_NAME);
 
         Service result = serviceService.add(service);
         Assertions.assertNotNull(result);
@@ -47,47 +48,47 @@ class ServiceServiceTest {
 
     @Test
     @Order(2)
-    void testListService() {
+    void testList() {
         Page<Service> list = serviceService.list(null, null);
         Assertions.assertNotNull(list);
     }
 
     @Test
     @Order(3)
-    void testGetService() {
-        Service service = serviceService.get("test-service");
+    void testGet() {
+        Service service = serviceService.get(TMP_NAME);
         Assertions.assertNotNull(service);
     }
 
 
     @Test
     @Order(4)
-    void testPatchService() {
+    void testPatch() {
         Service service = new Service();
         service.setReadTimeout(2);
-        Service result = serviceService.patch("test-service", service);
+        Service result = serviceService.patch(TMP_NAME, service);
         Assertions.assertNotNull(result);
         Assertions.assertEquals(2, result.getReadTimeout());
     }
 
     @Test
     @Order(5)
-    void testPutService() {
+    void testPut() {
         Service service = new Service();
         service.setRetries(0);
         service.setUrl("http://127.0.0.1/abc");
         service.setConnectTimeout(1);
         service.setWriteTimeout(1);
         service.setReadTimeout(1);
-        Service result = serviceService.put("test-service", service);
+        Service result = serviceService.put(TMP_NAME, service);
         Assertions.assertNotNull(result);
     }
 
     @Test
     @Order(6)
-    void testDeleteService() {
-        serviceService.delete("test-service");
-        Service service = serviceService.get("test-service");
+    void testDelete() {
+        serviceService.delete(TMP_NAME);
+        Service service = serviceService.get(TMP_NAME);
         Assertions.assertNull(service);
     }
 }
