@@ -25,10 +25,10 @@ import java.io.FileNotFoundException;
 class SniServiceTest {
     private static SniService targetService;
 
-    private String tmpName = "test_sni";
+    private static String TMP_NAME = "test_sni";
 
-    public static String originCertificateId = "be71ac8d-d0fd-4fa4-9603-d16d659268a1";
-    public static String newCertificateId = "be71ac8d-d0fd-4fa4-9603-d16d659268aa";
+    public static String ORIGIN_CERTIFICATE_ID = "be71ac8d-d0fd-4fa4-9603-d16d659268a1";
+    public static String NEW_CERTIFICATE_ID = "be71ac8d-d0fd-4fa4-9603-d16d659268aa";
 
     private static CertificateService certificateService;
 
@@ -60,7 +60,7 @@ class SniServiceTest {
                 "olBKXI895g8bJuhpolK+MxBluCuhRANCAARkFyaKXkPEfJhjUuN6LI1RBRLysuvp\n" +
                 "g3FLLO9xpCBnxMPp0qhXRtNfCoMvUDkEsGe2xjx6a7PbTCISEdE0NDAp\n" +
                 "-----END PRIVATE KEY-----");
-        certificate0.setId(originCertificateId);
+        certificate0.setId(ORIGIN_CERTIFICATE_ID);
         certificateService.add(certificate0);
 
         certificateService = kongClientUnderTest.getAdminClient().getService(CertificateService.class);
@@ -85,7 +85,7 @@ class SniServiceTest {
                 "olBKXI895g8bJuhpolK+MxBluCuhRANCAARkFyaKXkPEfJhjUuN6LI1RBRLysuvp\n" +
                 "g3FLLO9xpCBnxMPp0qhXRtNfCoMvUDkEsGe2xjx6a7PbTCISEdE0NDAp\n" +
                 "-----END PRIVATE KEY-----");
-        certificate.setId(newCertificateId);
+        certificate.setId(NEW_CERTIFICATE_ID);
         certificateService.add(certificate);
     }
 
@@ -94,9 +94,9 @@ class SniServiceTest {
     void testAdd() {
         Sni sni = new Sni();
         Certificate certificate = new Certificate();
-        certificate.setId(originCertificateId);
+        certificate.setId(ORIGIN_CERTIFICATE_ID);
         sni.setCertificate(certificate);
-        sni.setName(tmpName);
+        sni.setName(TMP_NAME);
 
         Sni result = targetService.add(sni);
         Assertions.assertNotNull(result);
@@ -113,7 +113,7 @@ class SniServiceTest {
     @Test
     @Order(3)
     void testGet() {
-        Sni result = targetService.get(tmpName);
+        Sni result = targetService.get(TMP_NAME);
         Assertions.assertNotNull(result);
     }
 
@@ -123,11 +123,11 @@ class SniServiceTest {
     void testPatch() {
         Sni sni = new Sni();
         Certificate certificate = new Certificate();
-        certificate.setId(newCertificateId);
+        certificate.setId(NEW_CERTIFICATE_ID);
         sni.setCertificate(certificate);
-        sni.setName(tmpName);
+        sni.setName(TMP_NAME);
 
-        Sni result = targetService.patch(tmpName, sni);
+        Sni result = targetService.patch(TMP_NAME, sni);
         Assertions.assertNotNull(result);
         Assertions.assertEquals(certificate.getId(), result.getCertificate().getId());
     }
@@ -137,26 +137,27 @@ class SniServiceTest {
     void testPut() {
         Sni sni = new Sni();
         Certificate certificate = new Certificate();
-        certificate.setId(originCertificateId);
+        certificate.setId(ORIGIN_CERTIFICATE_ID);
         sni.setCertificate(certificate);
-        sni.setName(tmpName);
-        Sni result = targetService.put(tmpName, sni);
+        sni.setName(TMP_NAME);
+        Sni result = targetService.put(TMP_NAME, sni);
         Assertions.assertNotNull(result);
     }
 
     @Test
     @Order(6)
     void testDelete() {
-        targetService.delete(tmpName);
-        Sni result = targetService.get(tmpName);
+        targetService.delete(TMP_NAME);
+        Sni result = targetService.get(TMP_NAME);
         Assertions.assertNull(result);
     }
 
 
     @AfterAll
     static void afterAll() {
-        certificateService.delete(originCertificateId);
-        certificateService.delete(newCertificateId);
+        targetService.delete(TMP_NAME);
+        certificateService.delete(ORIGIN_CERTIFICATE_ID);
+        certificateService.delete(NEW_CERTIFICATE_ID);
     }
 }
 

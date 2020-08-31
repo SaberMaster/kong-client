@@ -43,5 +43,5 @@ public interface UpstreamService {
     void deleteByTarget(@Param("targetHostPortOrId") String targetHostPortOrId);
 
     @RequestLine("GET /upstreams/{nameOrId}/health")
-    UpstreamHealth getHealth();
+    UpstreamHealth getHealth(@Param("nameOrId") String nameOrId);
 }

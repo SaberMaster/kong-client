@@ -24,6 +24,4 @@ public class Base {
     @SerializedName("updated_at")
     @JsonAdapter(DateLongFormatTypeAdapter.class)
     private Date updateAt;
-
-
 }

@@ -7,6 +7,7 @@ import com.i2bgod.kong.model.admin.base.Plugin;
 import com.i2bgod.kong.model.admin.base.page.Page;
 import com.i2bgod.kong.model.admin.plugin.config.RateLimiting;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
@@ -25,7 +26,7 @@ import java.io.FileNotFoundException;
 class PluginServiceTest {
     private static PluginService targetService;
 
-    private String tmpPluginId = "be71ac8d-d0fd-4fa4-9603-d16d65926884";
+    private static String TMP_PLUGIN_ID = "be71ac8d-d0fd-4fa4-9603-d16d65926884";
 
     @BeforeAll
     static void setUp() throws FileNotFoundException {
@@ -43,7 +44,7 @@ class PluginServiceTest {
         rateLimiting.setMinute(20);
 
         Plugin<RateLimiting> rateLimitingPlugin = new Plugin<>();
-        rateLimitingPlugin.setId(tmpPluginId);
+        rateLimitingPlugin.setId(TMP_PLUGIN_ID);
         rateLimitingPlugin.setConfig(rateLimiting);
         rateLimitingPlugin.setEnabled(true);
 
@@ -62,7 +63,7 @@ class PluginServiceTest {
     @Test
     @Order(3)
     void testGet() {
-        Plugin<Object> result = targetService.get(tmpPluginId);
+        Plugin<Object> result = targetService.get(TMP_PLUGIN_ID);
         Assertions.assertNotNull(result);
     }
 
@@ -72,7 +73,7 @@ class PluginServiceTest {
     void testPatch() {
         Plugin<Object> rateLimitingPlugin = new Plugin<>();
         rateLimitingPlugin.setEnabled(false);
-        Plugin<Object> result = targetService.patch(tmpPluginId, rateLimitingPlugin);
+        Plugin<Object> result = targetService.patch(TMP_PLUGIN_ID, rateLimitingPlugin);
         Assertions.assertNotNull(result);
         Assertions.assertEquals(false, result.getEnabled());
     }
@@ -88,15 +89,15 @@ class PluginServiceTest {
         Plugin<RateLimiting> rateLimitingPlugin = new Plugin<>();
         rateLimitingPlugin.setConfig(rateLimiting);
         rateLimitingPlugin.setEnabled(true);
-        Plugin<RateLimiting> result = targetService.put(tmpPluginId, rateLimitingPlugin);
+        Plugin<RateLimiting> result = targetService.put(TMP_PLUGIN_ID, rateLimitingPlugin);
         Assertions.assertNotNull(result);
     }
 
     @Test
     @Order(6)
     void testDelete() {
-        targetService.delete(tmpPluginId);
-        Plugin<Object> result = targetService.get(tmpPluginId);
+        targetService.delete(TMP_PLUGIN_ID);
+        Plugin<Object> result = targetService.get(TMP_PLUGIN_ID);
         Assertions.assertNull(result);
     }
 
@@ -106,6 +107,11 @@ class PluginServiceTest {
     void testEnabled() {
         EnabledPlugin enabled = targetService.enabled();
         Assertions.assertNotNull(enabled);
+    }
+
+    @AfterAll
+    static void afterAll() {
+        targetService.delete(TMP_PLUGIN_ID);
     }
 }
 

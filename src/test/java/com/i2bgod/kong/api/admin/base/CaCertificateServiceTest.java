@@ -5,6 +5,7 @@ import com.i2bgod.kong.TestProperties;
 import com.i2bgod.kong.model.admin.base.CaCertificate;
 import com.i2bgod.kong.model.admin.base.page.Page;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
@@ -22,7 +23,7 @@ import java.io.FileNotFoundException;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CaCertificateServiceTest {
     private static CaCertificateService targetService;
-    private String tmpId = "be71ac8d-d0fd-4fa4-9603-d16d65926882";
+    private static String TMP_ID = "be71ac8d-d0fd-4fa4-9603-d16d65926882";
 
     @BeforeAll
     static void setUp() throws FileNotFoundException {
@@ -50,7 +51,7 @@ class CaCertificateServiceTest {
                 "2oYqDOuJOk+vWVQmBVzrNorg9Qc7AiBynnEv0dbqm68/ExKGEWXCTafW/0j/AMUg\n" +
                 "5OdOO9rXnQ==\n" +
                 "-----END CERTIFICATE-----");
-        caCertificate.setId(tmpId);
+        caCertificate.setId(TMP_ID);
 
         CaCertificate result = targetService.add(caCertificate);
         Assertions.assertNotNull(result);
@@ -67,7 +68,7 @@ class CaCertificateServiceTest {
     @Test
     @Order(3)
     void testGet() {
-        CaCertificate result = targetService.get(tmpId);
+        CaCertificate result = targetService.get(TMP_ID);
         Assertions.assertNotNull(result);
     }
 
@@ -92,7 +93,7 @@ class CaCertificateServiceTest {
                 "5OdOO9rXnQ==\n" +
                 "-----END CERTIFICATE-----");
 
-        CaCertificate result = targetService.patch(tmpId, caCertificate);
+        CaCertificate result = targetService.patch(TMP_ID, caCertificate);
         Assertions.assertNotNull(result);
         Assertions.assertEquals(caCertificate.getCert(), result.getCert());
     }
@@ -116,18 +117,22 @@ class CaCertificateServiceTest {
                 "2oYqDOuJOk+vWVQmBVzrNorg9Qc7AiBynnEv0dbqm68/ExKGEWXCTafW/0j/AMUg\n" +
                 "5OdOO9rXnQ==\n" +
                 "-----END CERTIFICATE-----");
-        caCertificate.setId(tmpId);
-        CaCertificate result = targetService.put(tmpId, caCertificate);
+        caCertificate.setId(TMP_ID);
+        CaCertificate result = targetService.put(TMP_ID, caCertificate);
         Assertions.assertNotNull(result);
     }
 
     @Test
     @Order(6)
     void testDelete() {
-        targetService.delete(tmpId);
-        CaCertificate result = targetService.get(tmpId);
+        targetService.delete(TMP_ID);
+        CaCertificate result = targetService.get(TMP_ID);
         Assertions.assertNull(result);
     }
 
+    @AfterAll
+    static void afterAll() {
+        targetService.delete(TMP_ID);
+    }
 }
 

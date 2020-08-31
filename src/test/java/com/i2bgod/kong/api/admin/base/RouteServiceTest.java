@@ -6,7 +6,7 @@ import com.i2bgod.kong.model.admin.base.Route;
 import com.i2bgod.kong.model.admin.base.Service;
 import com.i2bgod.kong.model.admin.base.page.Page;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
@@ -30,7 +30,7 @@ class RouteServiceTest {
     private static ServiceService serviceService;
 
 
-    public static String serviceName = "route_service_name";
+    public static String TMP_SERVICE_NAME = "route_service_name";
 
     @BeforeAll
     static void setUp() throws FileNotFoundException {
@@ -45,7 +45,7 @@ class RouteServiceTest {
         service.setConnectTimeout(1);
         service.setWriteTimeout(1);
         service.setReadTimeout(1);
-        service.setName(serviceName);
+        service.setName(TMP_SERVICE_NAME);
         serviceService.add(service);
 
     }
@@ -59,7 +59,7 @@ class RouteServiceTest {
         route.setHosts(Collections.singletonList("test_route.com"));
         route.setPaths(Collections.singletonList("/test_route"));
         route.setName(TMP_NAME);
-        Route result = targetService.add(ServiceServiceTest.TMP_NAME, route);
+        Route result = targetService.add(TMP_SERVICE_NAME, route);
         Assertions.assertNotNull(result);
     }
 
@@ -110,9 +110,10 @@ class RouteServiceTest {
     }
 
 
-    @AfterEach
+    @AfterAll
     static void afterAll() {
-        serviceService.delete(serviceName);
+        targetService.delete(TMP_NAME);
+        serviceService.delete(TMP_SERVICE_NAME);
     }
 }
 

@@ -1,6 +1,7 @@
 package com.i2bgod.kong.model.admin.base;
 
 import com.google.gson.annotations.SerializedName;
+import com.i2bgod.kong.model.admin.base.annotation.KongEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -15,6 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Data
 @ToString(callSuper = true)
+@KongEntity(dbEntityName = "routes")
 public class Route extends TagBase{
     /**
      * id : d35165e2-d03e-461a-bdeb-dad0a112abfe

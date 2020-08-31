@@ -2,7 +2,8 @@ package com.i2bgod.kong.api.admin.base;
 
 import com.i2bgod.kong.KongClient;
 import com.i2bgod.kong.TestProperties;
-import com.i2bgod.kong.model.admin.base.Service;
+import com.i2bgod.kong.model.admin.base.Upstream;
+import com.i2bgod.kong.model.admin.base.UpstreamHealth;
 import com.i2bgod.kong.model.admin.base.page.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
@@ -21,67 +22,67 @@ import java.io.FileNotFoundException;
  */
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ServiceServiceTest {
-    public static final String TMP_NAME = "test-service";
-    private static ServiceService targetService;
+class UpstreamServiceTest {
+    private static UpstreamService targetService;
+    private static String TMP_NAME = "test-upstream";
 
     @BeforeAll
     static void setUp() throws FileNotFoundException {
         TestProperties testConfig = TestProperties.getTestConfig();
         KongClient kongClientUnderTest = new KongClient(testConfig.getAdminUrl());
-        targetService = kongClientUnderTest.getAdminClient().getService(ServiceService.class);
+        targetService = kongClientUnderTest.getAdminClient().getService(UpstreamService.class);
     }
 
     @Test
     @Order(1)
     void testAdd() {
-        Service service = new Service();
-        service.setRetries(0);
-        service.setUrl("http://127.0.0.1/abc");
-        service.setConnectTimeout(1);
-        service.setWriteTimeout(1);
-        service.setReadTimeout(1);
-        service.setName(TMP_NAME);
+        Upstream upstream = new Upstream();
+        upstream.setName(TMP_NAME);
+        upstream.setAlgorithm("round-robin");
 
-        Service result = targetService.add(service);
+        Upstream result = targetService.add(upstream);
         Assertions.assertNotNull(result);
     }
 
     @Test
     @Order(2)
     void testList() {
-        Page<Service> list = targetService.list(null, null);
+        Page<Upstream> list = targetService.list(null, null);
         Assertions.assertNotNull(list);
     }
+
 
     @Test
     @Order(3)
     void testGet() {
-        Service service = targetService.get(TMP_NAME);
-        Assertions.assertNotNull(service);
+        Upstream result = targetService.get(TMP_NAME);
+        Assertions.assertNotNull(result);
     }
 
 
     @Test
     @Order(4)
     void testPatch() {
-        Service service = new Service();
-        service.setReadTimeout(2);
-        Service result = targetService.patch(TMP_NAME, service);
+        Upstream upstream = new Upstream();
+        upstream.setAlgorithm("least-connections");
+        Upstream result = targetService.patch(TMP_NAME, upstream);
         Assertions.assertNotNull(result);
-        Assertions.assertEquals(2, result.getReadTimeout());
+        Assertions.assertEquals(upstream.getAlgorithm(), result.getAlgorithm());
     }
 
     @Test
     @Order(5)
     void testPut() {
-        Service service = new Service();
-        service.setRetries(0);
-        service.setUrl("http://127.0.0.1/abc");
-        service.setConnectTimeout(1);
-        service.setWriteTimeout(1);
-        service.setReadTimeout(1);
-        Service result = targetService.put(TMP_NAME, service);
+        Upstream upstream = new Upstream();
+        upstream.setAlgorithm("round-robin");
+        Upstream result = targetService.put(TMP_NAME, upstream);
+        Assertions.assertNotNull(result);
+    }
+
+    @Test
+    @Order(5)
+    void testHealth() {
+        UpstreamHealth result = targetService.getHealth(TMP_NAME);
         Assertions.assertNotNull(result);
     }
 
@@ -89,10 +90,9 @@ class ServiceServiceTest {
     @Order(6)
     void testDelete() {
         targetService.delete(TMP_NAME);
-        Service service = targetService.get(TMP_NAME);
-        Assertions.assertNull(service);
+        Upstream result = targetService.get(TMP_NAME);
+        Assertions.assertNull(result);
     }
-
 
     @AfterAll
     static void afterAll() {

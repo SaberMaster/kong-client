@@ -1,10 +1,13 @@
 package com.i2bgod.kong.model.admin.base;
 
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.i2bgod.kong.model.adapter.DateDoubleFormatTypeAdapter;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,21 +30,23 @@ public class UpstreamHealth {
     @SerializedName("node_id")
     private String nodeId;
     @SerializedName("data")
-    private List<DataBean> data;
+    private List<TargetHealthBean> data;
 
     @NoArgsConstructor
     @Data
     @ToString(callSuper = true)
-    public static class DataBean extends Base {
+    public static class TargetHealthBean {
         /**
          * created_at : 1485524883980
          * id : 18c0ad90-f942-4098-88db-bbee3e43b27f
          * health : HEALTHY
-         * target : 127.0.0.1:20000
+         * target : 127.0.0.1:20000.123
          * upstream_id : 07131005-ba30-4204-a29f-0927d53257b4
          * weight : 100
          */
 
+        @SerializedName("id")
+        private String id;
         @SerializedName("health")
         private String health;
         @SerializedName("target")
@@ -50,5 +55,8 @@ public class UpstreamHealth {
         private String upstreamId;
         @SerializedName("weight")
         private Integer weight;
+        @SerializedName("created_at")
+        @JsonAdapter(DateDoubleFormatTypeAdapter.class)
+        private Date createAt;
     }
 }

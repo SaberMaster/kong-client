@@ -12,24 +12,24 @@ import feign.RequestLine;
  * @date: 19/08/2020
  */
 @KongService(schemaName = "targets")
-@Headers("Content-Type: application/json")
-public interface TargetService {
-    @RequestLine("POST /upstreams/{upstreamHostPortOrId}/targets")
-    Target add(@Param("upstreamHostPortOrId") String upstreamHostPortOrId, Target target);
+    public interface TargetService {
+    @RequestLine("POST /upstreams/{upstreamNameOrId}/targets")
+    @Headers("Content-Type: application/json")
+    Target add(@Param("upstreamNameOrId") String upstreamNameOrId, Target target);
 
-    @RequestLine("GET /upstreams/{upstreamHostPortOrId}/targets?size={size}&offset={offset}")
-    Page<Target> list(@Param("upstreamHostPortOrId") String upstreamHostPortOrId, @Param("size") Long size, @Param("offset") String offset);
-    @RequestLine("GET /upstreams/{upstreamHostPortOrId}/targets/all")
-    Page<Target> listAll(@Param("upstreamHostPortOrId") String upstreamHostPortOrId);
+    @RequestLine("GET /upstreams/{upstreamNameOrId}/targets?size={size}&offset={offset}")
+    Page<Target> list(@Param("upstreamNameOrId") String upstreamNameOrId, @Param("size") Long size, @Param("offset") String offset);
+    @RequestLine("GET /upstreams/{upstreamNameOrId}/targets/all")
+    Page<Target> listAll(@Param("upstreamNameOrId") String upstreamNameOrId);
 
-    @RequestLine("DELETE /upstreams/{upstreamHostPortOrId}/targets/{hostPortOrId}")
-    void delete(@Param("upstreamHostPortOrId") String upstreamHostPortOrId, @Param("hostPortOrId") String hostPortOrId);
+    @RequestLine("DELETE /upstreams/{upstreamNameOrId}/targets/{hostPortOrId}")
+    void delete(@Param("upstreamNameOrId") String upstreamNameOrId, @Param("hostPortOrId") String hostPortOrId);
 
-    @RequestLine("POST /upstreams/{upstreamHostPortOrId}/targets/{hostPortOrId}/{address}/healthy")
-    Target setAddressHealthy(@Param("upstreamHostPortOrId") String upstreamHostPortOrId,@Param("hostPortOrId") String hostPortOrId, @Param("address") String address);
+    @RequestLine("POST /upstreams/{upstreamNameOrId}/targets/{hostPortOrId}/{address}/healthy")
+    void setAddressHealthy(@Param("upstreamNameOrId") String upstreamNameOrId,@Param("hostPortOrId") String hostPortOrId, @Param("address") String address);
 
-    @RequestLine("POST /upstreams/{upstreamHostPortOrId}/targets/{hostPortOrId}/unhealthy")
-    Target setUnHealthy(@Param("upstreamHostPortOrId") String upstreamHostPortOrId,@Param("hostPortOrId") String hostPortOrId);
-    @RequestLine("POST /upstreams/{upstreamHostPortOrId}/targets/{hostPortOrId}/healthy")
-    Target setHealthy(@Param("upstreamHostPortOrId") String upstreamHostPortOrId,@Param("hostPortOrId") String hostPortOrId);
+    @RequestLine("POST /upstreams/{upstreamNameOrId}/targets/{hostPortOrId}/unhealthy")
+    void setUnHealthy(@Param("upstreamNameOrId") String upstreamNameOrId,@Param("hostPortOrId") String hostPortOrId);
+    @RequestLine("POST /upstreams/{upstreamNameOrId}/targets/{hostPortOrId}/healthy")
+    void setHealthy(@Param("upstreamNameOrId") String upstreamNameOrId,@Param("hostPortOrId") String hostPortOrId);
 }

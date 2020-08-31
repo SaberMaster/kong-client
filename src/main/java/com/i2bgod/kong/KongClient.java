@@ -1,7 +1,7 @@
 package com.i2bgod.kong;
 
+import com.i2bgod.kong.gson.CustomGsonDecoder;
 import com.i2bgod.kong.misc.DefaultOkhttpClientCreator;
-import com.i2bgod.kong.model.codec.CustomGsonDecoder;
 import feign.Client;
 import feign.Feign;
 import feign.Logger;

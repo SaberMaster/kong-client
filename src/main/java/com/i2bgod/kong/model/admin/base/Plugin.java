@@ -2,6 +2,7 @@ package com.i2bgod.kong.model.admin.base;
 
 import com.google.gson.annotations.JsonAdapter;
 import com.i2bgod.kong.model.adapter.PluginJsonDeserializer;
+import com.i2bgod.kong.model.admin.base.annotation.KongEntity;
 import com.i2bgod.kong.model.admin.plugin.config.annoation.KongPluginConfig;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 @Data
 @ToString(callSuper = true)
 @JsonAdapter(PluginJsonDeserializer.class)
+@KongEntity(dbEntityName = "plugins")
 public class Plugin<T> extends PluginBase {
     /**
      * created_at : 1596616298
