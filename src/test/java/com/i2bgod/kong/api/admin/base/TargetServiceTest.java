@@ -36,10 +36,10 @@ class TargetServiceTest {
     @BeforeAll
     static void setUp() throws FileNotFoundException {
         TestProperties testConfig = TestProperties.getTestConfig();
-        KongClient kongClientUnderTest = new KongClient(testConfig.getAdminUrl());
-        targetService = kongClientUnderTest.getAdminClient().getService(TargetService.class);
+        KongClient kongClientUnderTest = new KongClient();
+        targetService = kongClientUnderTest.getAdminClient(testConfig.getAdminUrl()).getService(TargetService.class);
 
-        upstreamService = kongClientUnderTest.getAdminClient().getService(UpstreamService.class);
+        upstreamService = kongClientUnderTest.getAdminClient(testConfig.getAdminUrl()).getService(UpstreamService.class);
         Upstream upstream = new Upstream();
         upstream.setName(TMP_UPSTREAM_NAME);
         upstream.setAlgorithm("round-robin");

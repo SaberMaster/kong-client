@@ -23,8 +23,8 @@ class NodeServiceTest {
     @BeforeAll
     static void setUp() throws FileNotFoundException {
         TestProperties testConfig = TestProperties.getTestConfig();
-        KongClient kongClientUnderTest = new KongClient(testConfig.getAdminUrl());
-        nodeService = kongClientUnderTest.getAdminClient().getService(NodeService.class);
+        KongClient kongClientUnderTest = new KongClient();
+        nodeService = kongClientUnderTest.getAdminClient(testConfig.getAdminUrl()).getService(NodeService.class);
     }
 
 

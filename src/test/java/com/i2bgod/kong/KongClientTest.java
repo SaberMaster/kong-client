@@ -13,6 +13,6 @@ class KongClientTest {
     @BeforeEach
     void setUp() throws FileNotFoundException {
         TestProperties testConfig = TestProperties.getTestConfig();
-        KongClient kongClientUnderTest = new KongClient(testConfig.getAdminUrl());
+        KongClient kongClientUnderTest = new KongClient();
     }
 }

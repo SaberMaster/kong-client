@@ -35,10 +35,10 @@ class SniServiceTest {
     @BeforeAll
     static void setUp() throws FileNotFoundException {
         TestProperties testConfig = TestProperties.getTestConfig();
-        KongClient kongClientUnderTest = new KongClient(testConfig.getAdminUrl());
-        targetService = kongClientUnderTest.getAdminClient().getService(SniService.class);
+        KongClient kongClientUnderTest = new KongClient();
+        targetService = kongClientUnderTest.getAdminClient(testConfig.getAdminUrl()).getService(SniService.class);
 
-        certificateService = kongClientUnderTest.getAdminClient().getService(CertificateService.class);
+        certificateService = kongClientUnderTest.getAdminClient(testConfig.getAdminUrl()).getService(CertificateService.class);
         Certificate certificate0 = new Certificate();
         certificate0.setCert("-----BEGIN CERTIFICATE-----\n" +
                 "MIICSTCCAe+gAwIBAgIQb27rkPyZVCY/6b5im+IOqTAKBggqhkjOPQQDAjB2MQsw\n" +
@@ -63,7 +63,7 @@ class SniServiceTest {
         certificate0.setId(ORIGIN_CERTIFICATE_ID);
         certificateService.add(certificate0);
 
-        certificateService = kongClientUnderTest.getAdminClient().getService(CertificateService.class);
+        certificateService = kongClientUnderTest.getAdminClient(testConfig.getAdminUrl()).getService(CertificateService.class);
         Certificate certificate = new Certificate();
         certificate.setCert("-----BEGIN CERTIFICATE-----\n" +
                 "MIICSTCCAe+gAwIBAgIQb27rkPyZVCY/6b5im+IOqTAKBggqhkjOPQQDAjB2MQsw\n" +

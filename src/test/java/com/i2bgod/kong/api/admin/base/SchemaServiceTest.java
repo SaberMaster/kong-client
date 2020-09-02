@@ -24,8 +24,8 @@ class SchemaServiceTest {
     @BeforeAll
     static void setUp() throws FileNotFoundException {
         TestProperties testConfig = TestProperties.getTestConfig();
-        KongClient kongClientUnderTest = new KongClient(testConfig.getAdminUrl());
-        targetService = kongClientUnderTest.getAdminClient().getService(SchemaService.class);
+        KongClient kongClientUnderTest = new KongClient();
+        targetService = kongClientUnderTest.getAdminClient(testConfig.getAdminUrl()).getService(SchemaService.class);
     }
 
     @Test

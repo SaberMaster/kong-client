@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -23,36 +24,40 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  * @date: 04/08/2020
  */
 public class KongClient {
-    private String adminUrl;
-    private AdminClient adminClient;
     private static okhttp3.OkHttpClient defaultOkHttpClient;
 
-    public AdminClient getAdminClient() {
-        return adminClient;
+    final ConcurrentHashMap<String, AdminClient> adminClients;
+
+    public KongClient() {
+        this.adminClients = new ConcurrentHashMap<>(16);
     }
 
-    public String getAdminUrl() {
-        return adminUrl;
+    public AdminClient getAdminClient(String adminUrl) {
+        return this.getAdminClient(adminUrl,null,null,null,null,null);
     }
 
-    public KongClient(String adminUrl) {
-        this(adminUrl, null, null, null, null, null);
+    public AdminClient getAdminClient(String adminUrl,
+                                      @Nullable Retryer retryer,
+                                      @Nullable Request.Options options,
+                                      @Nullable Client client,
+                                      @Nullable Logger logger,
+                                      @Nullable Logger.Level level) {
+        return this.adminClients.compute(adminUrl,
+                (key, val) -> createAdminClient(adminUrl,retryer,options, client,logger, level));
     }
 
-    public KongClient(String adminUrl,
-                      @Nullable Retryer retryer,
-                      @Nullable Request.Options options,
-                      @Nullable Client client,
-                      @Nullable Logger logger,
-                      @Nullable Logger.Level level) {
-        this.adminUrl = adminUrl;
+    private AdminClient createAdminClient(String adminUrl,
+                                          @Nullable Retryer retryer,
+                                          @Nullable Request.Options options,
+                                          @Nullable Client client,
+                                          @Nullable Logger logger,
+                                          @Nullable Logger.Level level) {
 
         if (StringUtils.isBlank(adminUrl)) {
             throw new IllegalArgumentException("url is empty");
         }
-
         Feign.Builder builder = getFeignBuilder(retryer, options, client, logger, level);
-        this.adminClient = new AdminClient(builder, adminUrl);
+        return new AdminClient(builder, adminUrl);
     }
 
 

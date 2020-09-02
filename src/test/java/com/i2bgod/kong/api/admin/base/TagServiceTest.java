@@ -23,8 +23,8 @@ class TagServiceTest {
     @BeforeAll
     static void setUp() throws FileNotFoundException {
         TestProperties testConfig = TestProperties.getTestConfig();
-        KongClient kongClientUnderTest = new KongClient(testConfig.getAdminUrl());
-        tagService = kongClientUnderTest.getAdminClient().getService(TagService.class);
+        KongClient kongClientUnderTest = new KongClient();
+        tagService = kongClientUnderTest.getAdminClient(testConfig.getAdminUrl()).getService(TagService.class);
     }
 
 

@@ -35,10 +35,10 @@ class RouteServiceTest {
     @BeforeAll
     static void setUp() throws FileNotFoundException {
         TestProperties testConfig = TestProperties.getTestConfig();
-        KongClient kongClientUnderTest = new KongClient(testConfig.getAdminUrl());
-        targetService = kongClientUnderTest.getAdminClient().getService(RouteService.class);
+        KongClient kongClientUnderTest = new KongClient();
+        targetService = kongClientUnderTest.getAdminClient(testConfig.getAdminUrl()).getService(RouteService.class);
 
-        serviceService = kongClientUnderTest.getAdminClient().getService(ServiceService.class);
+        serviceService = kongClientUnderTest.getAdminClient(testConfig.getAdminUrl()).getService(ServiceService.class);
         Service service = new Service();
         service.setRetries(0);
         service.setUrl("http://127.0.0.1/abc");

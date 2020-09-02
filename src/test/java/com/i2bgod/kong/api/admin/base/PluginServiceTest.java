@@ -31,8 +31,8 @@ class PluginServiceTest {
     @BeforeAll
     static void setUp() throws FileNotFoundException {
         TestProperties testConfig = TestProperties.getTestConfig();
-        KongClient kongClientUnderTest = new KongClient(testConfig.getAdminUrl());
-        targetService = kongClientUnderTest.getAdminClient().getService(PluginService.class);
+        KongClient kongClientUnderTest = new KongClient();
+        targetService = kongClientUnderTest.getAdminClient(testConfig.getAdminUrl()).getService(PluginService.class);
     }
 
     @Test
