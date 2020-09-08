@@ -22,6 +22,11 @@ import feign.RequestLine;
     @RequestLine("GET /upstreams/{upstreamNameOrId}/targets/all")
     Page<Target> listAll(@Param("upstreamNameOrId") String upstreamNameOrId);
 
+    /**
+     * will throw exception if target is not exists
+     * @param upstreamNameOrId
+     * @param hostPortOrId
+     */
     @RequestLine("DELETE /upstreams/{upstreamNameOrId}/targets/{hostPortOrId}")
     void delete(@Param("upstreamNameOrId") String upstreamNameOrId, @Param("hostPortOrId") String hostPortOrId);
 

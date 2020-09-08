@@ -59,4 +59,9 @@ public class AdminClient {
         serviceMap = new HashMap<>(serviceClassMap.size());
         serviceClassMap.forEach((k, v) -> serviceMap.put(v, feignBuilder.target(v, url)));
     }
+
+    protected void release() {
+        // no need
+        serviceMap.clear();
+    }
 }

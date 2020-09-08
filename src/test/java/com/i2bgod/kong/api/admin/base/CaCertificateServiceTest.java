@@ -1,5 +1,6 @@
 package com.i2bgod.kong.api.admin.base;
 
+import com.i2bgod.kong.AdminClientConfig;
 import com.i2bgod.kong.KongClient;
 import com.i2bgod.kong.TestProperties;
 import com.i2bgod.kong.model.admin.base.CaCertificate;
@@ -12,6 +13,8 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import java.io.FileNotFoundException;
 
@@ -21,6 +24,7 @@ import java.io.FileNotFoundException;
  */
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Execution(ExecutionMode.CONCURRENT)
 class CaCertificateServiceTest {
     private static CaCertificateService targetService;
     private static String TMP_ID = "be71ac8d-d0fd-4fa4-9603-d16d65926882";
@@ -29,7 +33,9 @@ class CaCertificateServiceTest {
     static void setUp() throws FileNotFoundException {
         TestProperties testConfig = TestProperties.getTestConfig();
         KongClient kongClientUnderTest = new KongClient();
-        targetService = kongClientUnderTest.getAdminClient(testConfig.getAdminUrl()).getService(CaCertificateService.class);
+        AdminClientConfig adminClientConfig = new AdminClientConfig();
+        adminClientConfig.setAdminUrl(testConfig.getAdminUrl());
+        targetService = kongClientUnderTest.createAdminClient(adminClientConfig).getService(CaCertificateService.class);
     }
 
     @Test

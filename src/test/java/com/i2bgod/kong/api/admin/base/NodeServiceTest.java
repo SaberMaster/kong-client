@@ -1,5 +1,6 @@
 package com.i2bgod.kong.api.admin.base;
 
+import com.i2bgod.kong.AdminClientConfig;
 import com.i2bgod.kong.KongClient;
 import com.i2bgod.kong.TestProperties;
 import com.i2bgod.kong.model.admin.base.Node;
@@ -8,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import java.io.FileNotFoundException;
 
@@ -17,26 +20,29 @@ import java.io.FileNotFoundException;
  */
 
 @Slf4j
+@Execution(ExecutionMode.CONCURRENT)
 class NodeServiceTest {
-    private static NodeService nodeService;
+    private static NodeService targetService;
 
     @BeforeAll
     static void setUp() throws FileNotFoundException {
         TestProperties testConfig = TestProperties.getTestConfig();
         KongClient kongClientUnderTest = new KongClient();
-        nodeService = kongClientUnderTest.getAdminClient(testConfig.getAdminUrl()).getService(NodeService.class);
+        AdminClientConfig adminClientConfig = new AdminClientConfig();
+        adminClientConfig.setAdminUrl(testConfig.getAdminUrl());
+        targetService = kongClientUnderTest.createAdminClient(adminClientConfig).getService(NodeService.class);
     }
 
 
     @Test
     void testGet() {
-        Node node = nodeService.get();
+        Node node = targetService.get();
         Assertions.assertNotNull(node);
     }
 
     @Test
     void testGetStatus() {
-        NodeStatus nodeStatus = nodeService.getStatus();
+        NodeStatus nodeStatus = targetService.getStatus();
         Assertions.assertNotNull(nodeStatus);
     }
 }
