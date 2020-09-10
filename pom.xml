@@ -21,6 +21,7 @@
     <java.version>1.8</java.version>
     <lombok.version>1.18.12</lombok.version>
     <feign.version>10.10.1</feign.version>
+    <jackson.version>2.11.2</jackson.version>
     <junit.version>5.4.1</junit.version>
   </properties>
 
@@ -85,6 +86,23 @@
       <version>0.9.12</version>
     </dependency>
 
+    <!--yaml-->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-yaml</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
 
     <!-- Log libs -->
     <dependency>

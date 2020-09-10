@@ -1,4 +1,5 @@
 {
   "extraPluginsScanPackage" : null,
-  "extraServiceScanPackage" : null
+  "extraServiceScanPackage" : null,
+  "extraKongEntityScanPackage" : null
 }

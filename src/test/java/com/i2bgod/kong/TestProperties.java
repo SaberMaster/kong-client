@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 @Data
 public class TestProperties {
     private String adminUrl;
+    private String dblessAdminUrl;
 
     public static TestProperties getTestConfig() throws FileNotFoundException {
         InputStream inputStream = ConfigUtils.class.getClassLoader().getResourceAsStream("test.json");

@@ -2,6 +2,7 @@ package com.i2bgod.kong.model.admin.base;
 
 import com.google.gson.annotations.SerializedName;
 import com.i2bgod.kong.model.admin.base.annotation.KongEntity;
+import com.i2bgod.kong.model.admin.base.annotation.KongFK;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -25,5 +26,6 @@ public class Sni extends TagBase{
      */
 
     @SerializedName("certificate")
+    @KongFK
     private Certificate certificate;
 }

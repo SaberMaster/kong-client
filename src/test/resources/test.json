@@ -1,3 +1,4 @@
 {
-  "adminUrl" : "http://localhost:18001/"
+  "adminUrl" : "http://localhost:18001/",
+  "dblessAdminUrl" : "http://localhost:18001/"
 }

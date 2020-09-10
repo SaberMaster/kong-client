@@ -4,6 +4,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.i2bgod.kong.model.adapter.DateDoubleFormatTypeAdapter;
 import com.i2bgod.kong.model.admin.base.annotation.KongEntity;
+import com.i2bgod.kong.model.admin.base.annotation.KongFK;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -33,6 +34,7 @@ public class Target {
     @SerializedName("id")
     private String id;
     @SerializedName("upstream")
+    @KongFK
     private Upstream upstream;
     @SerializedName("target")
     private String target;
