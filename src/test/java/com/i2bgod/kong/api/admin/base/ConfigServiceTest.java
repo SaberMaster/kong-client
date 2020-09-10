@@ -1,5 +1,6 @@
 package com.i2bgod.kong.api.admin.base;
 
+import com.i2bgod.kong.AdminClient;
 import com.i2bgod.kong.AdminClientConfig;
 import com.i2bgod.kong.KongClient;
 import com.i2bgod.kong.TestProperties;
@@ -31,6 +32,7 @@ import java.util.Map;
 @Execution(ExecutionMode.CONCURRENT)
 class ConfigServiceTest {
     private static ConfigService targetService;
+    private static AdminClient adminClient;
 
     @BeforeAll
     static void setUp() throws FileNotFoundException {
@@ -39,7 +41,8 @@ class ConfigServiceTest {
         AdminClientConfig adminClientConfig = new AdminClientConfig();
         String dblessAdminUrl = testConfig.getDblessAdminUrl();
         adminClientConfig.setAdminUrl(dblessAdminUrl);
-        targetService = kongClientUnderTest.createAdminClient(adminClientConfig).getService(ConfigService.class);
+        adminClient = kongClientUnderTest.createAdminClient(adminClientConfig);
+        targetService = adminClient.getService(ConfigService.class);
     }
 
 
@@ -70,7 +73,7 @@ class ConfigServiceTest {
 
         objects.add(service);
         objects.add(route);
-        yamlConfig.setConfig(objects,null);
+        yamlConfig.setConfig(adminClient.getSchemaUtils().generateDblessYamlStr(objects, null));
         Map<String, Map<String, Object>> stringListMap = targetService.addYaml(yamlConfig, null);
         Assertions.assertNotNull(stringListMap);
     }

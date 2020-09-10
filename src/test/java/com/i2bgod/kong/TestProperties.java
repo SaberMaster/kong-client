@@ -1,7 +1,6 @@
 package com.i2bgod.kong;
 
 import com.google.gson.Gson;
-import com.i2bgod.kong.util.ConfigUtils;
 import lombok.Data;
 
 import java.io.FileNotFoundException;
@@ -18,7 +17,7 @@ public class TestProperties {
     private String dblessAdminUrl;
 
     public static TestProperties getTestConfig() throws FileNotFoundException {
-        InputStream inputStream = ConfigUtils.class.getClassLoader().getResourceAsStream("test.json");
+        InputStream inputStream = KongClient.class.getClassLoader().getResourceAsStream("test.json");
         if (null == inputStream) {
             throw new FileNotFoundException("test config not found!");
         }

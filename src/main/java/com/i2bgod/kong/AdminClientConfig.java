@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -23,6 +24,9 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 public class AdminClientConfig {
     @Setter
     private String adminUrl;
+
+    private List<String> extraScanPackage;
+
     @Nullable
     private Retryer retryer  = new Retryer.Default(100, SECONDS.toMillis(1), 3);
     @Nullable

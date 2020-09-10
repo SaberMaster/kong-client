@@ -1,8 +1,5 @@
 package com.i2bgod.kong;
 
-import com.i2bgod.kong.gson.CustomGsonDecoder;
-import feign.Feign;
-import feign.gson.GsonEncoder;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
@@ -25,10 +22,7 @@ public class KongClient {
         }
 
         return this.adminClients.compute(adminClientConfig.getAdminUrl(),
-                (key, val) -> {
-                    Feign.Builder builder = getFeignBuilder(adminClientConfig);
-                    return new AdminClient(builder, adminClientConfig.getAdminUrl());
-                });
+                (key, val) -> new AdminClient(adminClientConfig));
     }
 
     @Nullable
@@ -52,18 +46,5 @@ public class KongClient {
             return this.adminClients.remove(adminUrl);
         }
         return null;
-    }
-
-
-    private Feign.Builder getFeignBuilder(AdminClientConfig adminClientConfig) {
-        return Feign.builder()
-                .decoder(new CustomGsonDecoder())
-                .encoder(new GsonEncoder())
-                .decode404()
-                .retryer(adminClientConfig.getRetryer())
-                .options(adminClientConfig.getOptions())
-                .client(adminClientConfig.getClient())
-                .logger(adminClientConfig.getLogger())
-                .logLevel(adminClientConfig.getLevel());
     }
 }

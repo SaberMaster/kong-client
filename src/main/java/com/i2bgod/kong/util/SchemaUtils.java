@@ -3,7 +3,6 @@ package com.i2bgod.kong.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.i2bgod.kong.bean.ClientConfig;
 import com.i2bgod.kong.exception.KongClientException;
 import com.i2bgod.kong.model.adapter.DblessJsonSerializer;
 import com.i2bgod.kong.model.admin.base.annotation.KongEntity;
@@ -19,31 +18,44 @@ import java.util.Optional;
  * @date: 08/09/2020
  */
 public class SchemaUtils {
+    private Map<String, Class<?>> kongEntityClassMap;
+
+    public Map<String, Class<?>> getKongEntityClassMap() {
+        return kongEntityClassMap;
+    }
+
+    public void setKongEntityClassMap(Map<String, Class<?>> kongEntityClassMap) {
+        this.kongEntityClassMap = kongEntityClassMap;
+    }
+
+    public SchemaUtils(Map<String, Class<?>> kongEntityClassMap) {
+        this.kongEntityClassMap = kongEntityClassMap;
+    }
+
     @SuppressWarnings("unchecked")
-    public static String generateDblessJsonStr(List<Object> entities, String formatVersion) {
+    public String generateDblessJsonStr(List<Object> entities, String formatVersion) {
         Map<String, Object> maps = transEntityList2Map(entities);
         return generateDblessJsonStr(maps, formatVersion);
     }
 
-    public static String generateDblessJsonStr(Map<String, Object> config, String formatVersion) {
+    public String generateDblessJsonStr(Map<String, Object> config, String formatVersion) {
         config.put("_format_version", Optional.ofNullable(formatVersion).orElse("1.1"));
 
         GsonBuilder gsonBuilder = new GsonBuilder();
-        ClientConfig clientConfig = ConfigUtils.getClientConfig();
-        clientConfig.getKongEntityClassMap().values().forEach(entity -> gsonBuilder.registerTypeAdapter(entity, new DblessJsonSerializer<>()));
+        kongEntityClassMap.values().forEach(entity -> gsonBuilder.registerTypeAdapter(entity, new DblessJsonSerializer<>()));
         Gson gson = gsonBuilder.create();
         return gson.toJson(config);
     }
 
 
     @SuppressWarnings("unchecked")
-    public static String generateDblessYamlStr(List<Object> entities, String formatVersion) {
+    public String generateDblessYamlStr(List<Object> entities, String formatVersion) {
         Map<String, Object> maps = transEntityList2Map(entities);
         return generateDblessYamlStr(maps, formatVersion);
     }
 
     @SuppressWarnings("unchecked")
-    private static Map<String, Object> transEntityList2Map(List<Object> entities) {
+    private Map<String, Object> transEntityList2Map(List<Object> entities) {
         return entities.stream().collect(
                 HashMap::new,
                 (map, obj) -> {
@@ -56,7 +68,7 @@ public class SchemaUtils {
         );
     }
 
-    public static String generateDblessYamlStr(Map<String, Object> config, String formatVersion) {
+    public String generateDblessYamlStr(Map<String, Object> config, String formatVersion) {
         String jsonStr = generateDblessJsonStr(config, formatVersion);
         try {
             return YamlUtils.toYamlStr(jsonStr);

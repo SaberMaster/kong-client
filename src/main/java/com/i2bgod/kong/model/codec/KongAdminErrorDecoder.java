@@ -1,8 +1,8 @@
 package com.i2bgod.kong.model.codec;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.i2bgod.kong.exception.KongClientException;
-import com.i2bgod.kong.util.ConfigUtils;
 import feign.Response;
 import feign.RetryableException;
 import feign.Util;
@@ -21,6 +21,8 @@ import java.util.Map;
 @Slf4j
 public class KongAdminErrorDecoder implements ErrorDecoder {
     private final ErrorDecoder defaultErrorDecoder = new Default();
+
+    private static Gson gson = new Gson();
 
     @Override
     public Exception decode(String methodKey, Response response) {
@@ -42,7 +44,7 @@ public class KongAdminErrorDecoder implements ErrorDecoder {
             return new KongClientException(
                     "kong response error",
                     response.status(),
-                    ConfigUtils.getGson().fromJson(body, Object.class)
+                    gson.fromJson(body, Object.class)
                     );
 
         } catch (JsonSyntaxException jsonException) {

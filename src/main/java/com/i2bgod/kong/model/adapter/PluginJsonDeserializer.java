@@ -17,6 +17,12 @@ import java.lang.reflect.Type;
  */
 public class PluginJsonDeserializer<T> implements JsonDeserializer<Plugin<T>> {
 
+    private PluginUtils pluginUtils;
+
+    public PluginJsonDeserializer(PluginUtils pluginUtils) {
+       this.pluginUtils = pluginUtils;
+    }
+
     @Override
     public Plugin<T> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         final JsonObject jsonObject = json.getAsJsonObject();
@@ -32,6 +38,6 @@ public class PluginJsonDeserializer<T> implements JsonDeserializer<Plugin<T>> {
     }
 
     private Type resolvePluginConfigTypeByPluginName(String name) {
-        return PluginUtils.resolvePluginConfig(name);
+        return pluginUtils.resolvePluginConfig(name);
     }
 }

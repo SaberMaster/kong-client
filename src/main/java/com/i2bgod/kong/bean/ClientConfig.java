@@ -3,10 +3,13 @@ package com.i2bgod.kong.bean;
 import com.i2bgod.kong.api.admin.annoation.KongService;
 import com.i2bgod.kong.model.admin.base.annotation.KongEntity;
 import com.i2bgod.kong.model.admin.plugin.config.annoation.KongPluginConfig;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.reflections.Reflections;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,46 +23,28 @@ public class ClientConfig {
     private Map<String, Class<?>> pluginConfigClassMap;
     private Map<String, Class<?>> serviceClassMap;
     private Map<String, Class<?>> kongEntityClassMap;
-    private String extraPluginConfigScanPackage;
-    private String extraServiceScanPackage;
-    private String extraKongEntityScanPackage;
 
 
-    public ClientConfig() {
-        initConfig();
-    }
-
-    public String getExtraPluginConfigScanPackage() {
-        return extraPluginConfigScanPackage;
-    }
-
-    public void setExtraPluginConfigScanPackage(String extraPluginConfigScanPackage) {
-        this.extraPluginConfigScanPackage = extraPluginConfigScanPackage;
-        // scan extra plugin config
-        // extra plugin config will override the base plugin config
-        pluginConfigClassMap.putAll(scanPluginConfig(extraPluginConfigScanPackage));
-    }
-
-    public String getExtraServiceScanPackage() {
-        return extraServiceScanPackage;
-    }
-
-    public void setExtraServiceScanPackage(String extraServiceScanPackage) {
-        this.extraServiceScanPackage = extraServiceScanPackage;
-        // scan extra service
-        // extra service will override the base service
-        this.serviceClassMap.putAll(scanService(extraServiceScanPackage));
-    }
-
-    public String getExtraKongEntityScanPackage() {
-        return extraKongEntityScanPackage;
-    }
-
-    public void setExtraKongEntityScanPackage(String extraKongEntityScanPackage) {
-        this.extraKongEntityScanPackage = extraKongEntityScanPackage;
-        // scan extra service
-        // extra service will override the base service
-        this.kongEntityClassMap.putAll(scanEntity(extraKongEntityScanPackage));
+    public ClientConfig(List<String> extraScanPackage) {
+        if (CollectionUtils.isEmpty(extraScanPackage)) {
+            extraScanPackage = Collections.singletonList(BASE_PACKAGE);
+        } else {
+            extraScanPackage.add(0, BASE_PACKAGE);
+        }
+        pluginConfigClassMap = new HashMap<>(32);
+        serviceClassMap = new HashMap<>(32);
+        kongEntityClassMap = new HashMap<>(32);
+        extraScanPackage.forEach(packageName -> {
+            // scan extra plugin config
+            // extra plugin config will override the base plugin config
+            pluginConfigClassMap.putAll(scanPluginConfig(packageName));
+            // scan extra service
+            // extra service will override the base service
+            serviceClassMap.putAll(scanService(packageName));
+            // scan extra entity
+            // extra entity will override the base service
+            kongEntityClassMap.putAll(scanEntity(packageName));
+        });
     }
 
     public Map<String, Class<?>> getPluginConfigClassMap() {
@@ -70,16 +55,8 @@ public class ClientConfig {
         return serviceClassMap;
     }
 
-
     public Map<String, Class<?>> getKongEntityClassMap() {
         return kongEntityClassMap;
-    }
-
-
-    private void initConfig() {
-        pluginConfigClassMap = scanPluginConfig(BASE_PACKAGE);
-        serviceClassMap = scanService(BASE_PACKAGE);
-        kongEntityClassMap = scanEntity(BASE_PACKAGE);
     }
 
     private Map<String, Class<?>> scanPluginConfig(String basePackage) {
