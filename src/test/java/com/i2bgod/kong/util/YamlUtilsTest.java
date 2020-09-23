@@ -11,4 +11,12 @@ class YamlUtilsTest {
     void testToYamlStr() throws Exception {
         assertEquals("---\n_format_version: \"1.1\"\nconsumers:\n- username: \"bobby\"\n", YamlUtils.toYamlStr("{\n\t\"_format_version\" : \"1.1\",\n\t\"consumers\": [ {\"username\":\"bobby\"}]}"));
     }
+
+
+    @Test
+    void testToJsonStr() throws Exception {
+        assertEquals("{\"_format_version\":\"1.1\",\"consumers\":[{\"username\":\"bobby\"}]}",
+                YamlUtils.toJsonStr("---\n_format_version: \"1.1\"\n" + "consumers:\n- username: \"bobby\"")
+        );
+    }
 }
