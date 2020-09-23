@@ -11,6 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.i2bgod.kong.model.admin.base.annotation.KongFK;
+import lombok.extern.slf4j.Slf4j;
 import okio.Buffer;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -37,6 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author: Lyn
  * @date: 05/08/2020
  */
+@Slf4j
 public class DblessJsonSerializer<T> implements JsonSerializer<T> {
     private Map<Class<?>, Object> jsonConverterMap = new ConcurrentHashMap<>(4);
 
@@ -54,9 +56,13 @@ public class DblessJsonSerializer<T> implements JsonSerializer<T> {
     }
 
     private String getSerializedName(Field field) {
-        String value = field.getAnnotation(SerializedName.class).value();
-        if (StringUtils.isBlank(value)) {
+        SerializedName annotation = field.getAnnotation(SerializedName.class);
+        String value;
+        if (null == annotation || StringUtils.isBlank(annotation.value())) {
+            log.debug("SerializeName annotation is missing on {}", field);
             value = field.getName();
+        } else {
+           value = annotation.value();
         }
         return value;
     }
@@ -86,7 +92,7 @@ public class DblessJsonSerializer<T> implements JsonSerializer<T> {
             try {
                 Object fieldObj = getFieldValue(src, field.getName());
                 if (!field.isAnnotationPresent(JsonAdapter.class)) {
-                    jsonObject.add(getSerializedName(field), context.serialize(fieldObj));
+                    jsonObject.add(getSerializedName(field), context.serialize(fieldObj, field.getType()));
                 } else {
                     Class<?> jsonAdaptorClz = field.getAnnotation(JsonAdapter.class).value();
                     //typeAdapter
@@ -133,12 +139,16 @@ public class DblessJsonSerializer<T> implements JsonSerializer<T> {
         // extract fk field
         fkFields.forEach(field -> {
             Object target = getFieldValue(src, field.getName());
+            if (null == target) {
+                return;
+            }
             Object o = getFieldValue(target, field.getAnnotation(KongFK.class).name());
             if (o instanceof Number) {
                 jsonObject.addProperty(getSerializedName(field), ((Number) o));
             } else if (o instanceof String) {
                 jsonObject.addProperty(getSerializedName(field), ((String) o));
             } else {
+                log.warn("not support fk type for target:{}, on field:{}", target, field);
                 throw new RuntimeException("not support fk type");
             }
         });
