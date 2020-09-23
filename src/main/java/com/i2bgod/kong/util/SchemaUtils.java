@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -56,7 +57,9 @@ public class SchemaUtils {
 
     @SuppressWarnings("unchecked")
     private Map<String, Object> transEntityList2Map(List<Object> entities) {
-        return entities.stream().collect(
+        return entities.stream()
+                .filter(Objects::nonNull)
+                .collect(
                 HashMap::new,
                 (map, obj) -> {
                     KongEntity annotation = obj.getClass().getAnnotation(KongEntity.class);

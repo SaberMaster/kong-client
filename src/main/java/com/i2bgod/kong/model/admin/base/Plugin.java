@@ -1,6 +1,7 @@
 package com.i2bgod.kong.model.admin.base;
 
 import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
 import com.i2bgod.kong.model.adapter.PluginJsonDeserializer;
 import com.i2bgod.kong.model.admin.base.annotation.KongEntity;
 import com.i2bgod.kong.model.admin.plugin.config.annoation.KongPluginConfig;
@@ -31,6 +32,7 @@ public class Plugin<T> extends PluginBase {
      * service : null
      */
 
+    @SerializedName("config")
     private T config;
 
     public Plugin(PluginBase pluginBase) {

@@ -38,6 +38,10 @@ public class AdminClientConfig {
     @Nullable
     private Logger.Level level = Logger.Level.FULL;
 
+    public void setExtraScanPackage(List<String> extraScanPackage) {
+        this.extraScanPackage = extraScanPackage;
+    }
+
 
     public void setRetryer(@Nullable Retryer retryer) {
         if (null == retryer) {

@@ -33,6 +33,12 @@ public class AdminClient {
 
     private PluginUtils pluginUtils;
 
+    public Gson getGson() {
+        return gson;
+    }
+
+    public Gson gson;
+
     public AdminClient(AdminClientConfig config) {
         this.config = new ClientConfig(config.getExtraScanPackage());
         schemaUtils = new SchemaUtils(this.config.getKongEntityClassMap());
@@ -85,7 +91,7 @@ public class AdminClient {
     private Feign.Builder getFeignBuilder(AdminClientConfig adminClientConfig) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(Plugin.class, new PluginJsonDeserializer<>(this.pluginUtils));
-        Gson gson = gsonBuilder.create();
+        this.gson = gsonBuilder.create();
         return Feign.builder()
                 .decoder(new CustomGsonDecoder(gson))
                 .encoder(new GsonEncoder(gson))
