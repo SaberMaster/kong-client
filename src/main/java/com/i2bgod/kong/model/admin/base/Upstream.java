@@ -57,6 +57,8 @@ public class Upstream extends TagBase{
         private ActiveBean active;
         @SerializedName("passive")
         private PassiveBean passive;
+        @SerializedName("threshold")
+        private Integer threshold;
 
         @NoArgsConstructor
         @Data
