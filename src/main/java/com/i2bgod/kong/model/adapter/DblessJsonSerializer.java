@@ -82,6 +82,7 @@ public class DblessJsonSerializer<T> implements JsonSerializer<T> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public JsonElement serialize(T src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject jsonObject = new JsonObject();
@@ -121,7 +122,7 @@ public class DblessJsonSerializer<T> implements JsonSerializer<T> {
                     // jsonSerializer
                     } else if (JsonSerializer.class.isAssignableFrom(jsonAdaptorClz)) {
                         JsonSerializer serializer = (JsonSerializer) getJsonConverter(jsonAdaptorClz);
-                        jsonObject.add(getSerializedName(field), serializer.serialize(fieldObj, fieldObj.getClass(), context));
+                        jsonObject.add(getSerializedName(field), serializer.serialize(fieldObj, field.getType(), context));
                     // other case
                     } else {
                         jsonObject.add(getSerializedName(field), context.serialize(fieldObj));
