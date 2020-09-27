@@ -2,7 +2,7 @@ package com.i2bgod.kong.model.admin.base;
 
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.i2bgod.kong.model.adapter.EmptyArrayJsonDeserializer;
+import com.i2bgod.kong.model.adapter.EmptyArrayTypeAdapter;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -66,7 +66,7 @@ public class Node {
         @SerializedName("admin_ssl_cert_key")
         private String adminSslCertKey;
         @SerializedName("dns_resolver")
-        @JsonAdapter(EmptyArrayJsonDeserializer.class)
+        @JsonAdapter(EmptyArrayTypeAdapter.class)
         private List<String> dnsResolver;
         @SerializedName("pg_user")
         private String pgUser;
@@ -93,7 +93,7 @@ public class Node {
         private String clientSslCertDefault;
         //todo: check is ok
         @SerializedName("stream_listeners")
-        @JsonAdapter(EmptyArrayJsonDeserializer.class)
+        @JsonAdapter(EmptyArrayTypeAdapter.class)
         private List<Object> streamListeners;
         @SerializedName("pg_semaphore_timeout")
         private Integer pgSemaphoreTimeout;
@@ -128,7 +128,7 @@ public class Node {
         @SerializedName("nginx_sproxy_directives")
         private Map<String, Object> nginxSproxyDirectives;
         @SerializedName("origins")
-        @JsonAdapter(EmptyArrayJsonDeserializer.class)
+        @JsonAdapter(EmptyArrayTypeAdapter.class)
         private List<String> origins;
         @SerializedName("admin_ssl_cert")
         private String adminSslCert;
@@ -246,7 +246,7 @@ public class Node {
         private String routerConsistency;
         //todo: check is ok
         @SerializedName("nginx_proxy_directives")
-        @JsonAdapter(EmptyArrayJsonDeserializer.class)
+        @JsonAdapter(EmptyArrayTypeAdapter.class)
         private List<Object> nginxProxyDirectives;
         @SerializedName("admin_access_log")
         private String adminAccessLog;
@@ -271,46 +271,46 @@ public class Node {
         @SerializedName("admin_ssl_enabled")
         private Boolean adminSslEnabled;
         @SerializedName("plugins")
-        @JsonAdapter(EmptyArrayJsonDeserializer.class)
+        @JsonAdapter(EmptyArrayTypeAdapter.class)
         private List<String> plugins;
         @SerializedName("admin_listen")
-        @JsonAdapter(EmptyArrayJsonDeserializer.class)
+        @JsonAdapter(EmptyArrayTypeAdapter.class)
         private List<String> adminListen;
         @SerializedName("trusted_ips")
-        @JsonAdapter(EmptyArrayJsonDeserializer.class)
+        @JsonAdapter(EmptyArrayTypeAdapter.class)
         private List<String> trustedIps;
         @SerializedName("cassandra_data_centers")
-        @JsonAdapter(EmptyArrayJsonDeserializer.class)
+        @JsonAdapter(EmptyArrayTypeAdapter.class)
         private List<String> cassandraDataCenters;
         @SerializedName("nginx_http_upstream_directives")
-        @JsonAdapter(EmptyArrayJsonDeserializer.class)
+        @JsonAdapter(EmptyArrayTypeAdapter.class)
         private List<NginxHttpUpstreamDirectivesBean> nginxHttpUpstreamDirectives;
         @SerializedName("proxy_listen")
-        @JsonAdapter(EmptyArrayJsonDeserializer.class)
+        @JsonAdapter(EmptyArrayTypeAdapter.class)
         private List<String> proxyListen;
         @SerializedName("stream_listen")
-        @JsonAdapter(EmptyArrayJsonDeserializer.class)
+        @JsonAdapter(EmptyArrayTypeAdapter.class)
         private List<String> streamListen;
         @SerializedName("dns_order")
-        @JsonAdapter(EmptyArrayJsonDeserializer.class)
+        @JsonAdapter(EmptyArrayTypeAdapter.class)
         private List<String> dnsOrder;
         @SerializedName("headers")
-        @JsonAdapter(EmptyArrayJsonDeserializer.class)
+        @JsonAdapter(EmptyArrayTypeAdapter.class)
         private List<String> headers;
         @SerializedName("nginx_http_directives")
-        @JsonAdapter(EmptyArrayJsonDeserializer.class)
+        @JsonAdapter(EmptyArrayTypeAdapter.class)
         private List<NginxHttpDirectivesBean> nginxHttpDirectives;
         @SerializedName("cassandra_contact_poIntegers")
-        @JsonAdapter(EmptyArrayJsonDeserializer.class)
+        @JsonAdapter(EmptyArrayTypeAdapter.class)
         private List<String> cassandraContactPoIntegers;
         @SerializedName("proxy_listeners")
-        @JsonAdapter(EmptyArrayJsonDeserializer.class)
+        @JsonAdapter(EmptyArrayTypeAdapter.class)
         private List<ProxyListenersBean> proxyListeners;
         @SerializedName("db_cache_warmup_entities")
-        @JsonAdapter(EmptyArrayJsonDeserializer.class)
+        @JsonAdapter(EmptyArrayTypeAdapter.class)
         private List<String> dbCacheWarmupEntities;
         @SerializedName("admin_listeners")
-        @JsonAdapter(EmptyArrayJsonDeserializer.class)
+        @JsonAdapter(EmptyArrayTypeAdapter.class)
         private List<AdminListenersBean> adminListeners;
 
 

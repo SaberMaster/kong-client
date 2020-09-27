@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.i2bgod.kong.bean.ClientConfig;
 import com.i2bgod.kong.exception.KongClientException;
 import com.i2bgod.kong.gson.CustomGsonDecoder;
-import com.i2bgod.kong.model.adapter.PluginJsonDeserializer;
+import com.i2bgod.kong.model.adapter.PluginJsonTypeAdapter;
 import com.i2bgod.kong.model.admin.base.Plugin;
 import com.i2bgod.kong.model.codec.KongAdminErrorDecoder;
 import com.i2bgod.kong.util.PluginUtils;
@@ -41,8 +41,8 @@ public class AdminClient {
 
     public AdminClient(AdminClientConfig config) {
         this.config = new ClientConfig(config.getExtraScanPackage());
-        schemaUtils = new SchemaUtils(this.config.getKongEntityClassMap());
         pluginUtils = new PluginUtils(this.config.getPluginConfigClassMap());
+        schemaUtils = new SchemaUtils(this.config.getKongEntityClassMap(), pluginUtils);
         Feign.Builder feignBuilder = getFeignBuilder(config);
         this.url = config.getAdminUrl();
         createProxy(feignBuilder, url);
@@ -90,7 +90,7 @@ public class AdminClient {
 
     private Feign.Builder getFeignBuilder(AdminClientConfig adminClientConfig) {
         GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(Plugin.class, new PluginJsonDeserializer<>(this.pluginUtils));
+        gsonBuilder.registerTypeAdapter(Plugin.class, new PluginJsonTypeAdapter<>(this.pluginUtils));
         this.gson = gsonBuilder.create();
         return Feign.builder()
                 .decoder(new CustomGsonDecoder(gson))

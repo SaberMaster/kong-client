@@ -29,8 +29,19 @@ public class SchemaUtils {
         this.kongEntityClassMap = kongEntityClassMap;
     }
 
-    public SchemaUtils(Map<String, Class<?>> kongEntityClassMap) {
+    private PluginUtils pluginUtils;
+
+    public PluginUtils getPluginUtils() {
+        return pluginUtils;
+    }
+
+    public void setPluginUtils(PluginUtils pluginUtils) {
+        this.pluginUtils = pluginUtils;
+    }
+
+    public SchemaUtils(Map<String, Class<?>> kongEntityClassMap, PluginUtils pluginUtils) {
         this.kongEntityClassMap = kongEntityClassMap;
+        this.pluginUtils = pluginUtils;
     }
 
     @SuppressWarnings("unchecked")
@@ -43,7 +54,7 @@ public class SchemaUtils {
         config.put("_format_version", Optional.ofNullable(formatVersion).orElse("1.1"));
 
         GsonBuilder gsonBuilder = new GsonBuilder();
-        kongEntityClassMap.values().forEach(entity -> gsonBuilder.registerTypeAdapter(entity, new DblessJsonSerializer<>()));
+        kongEntityClassMap.values().forEach(entity -> gsonBuilder.registerTypeAdapter(entity, new DblessJsonSerializer<>(pluginUtils)));
         Gson gson = gsonBuilder.create();
         return gson.toJson(config);
     }

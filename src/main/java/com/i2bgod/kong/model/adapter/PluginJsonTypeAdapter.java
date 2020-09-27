@@ -5,6 +5,8 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.i2bgod.kong.model.admin.base.Plugin;
 import com.i2bgod.kong.model.admin.base.PluginBase;
 import com.i2bgod.kong.util.PluginUtils;
@@ -15,11 +17,11 @@ import java.lang.reflect.Type;
  * @author: Lyn
  * @date: 05/08/2020
  */
-public class PluginJsonDeserializer<T> implements JsonDeserializer<Plugin<T>> {
+public class PluginJsonTypeAdapter<T> implements JsonDeserializer<Plugin<T>>, JsonSerializer<Plugin<T>> {
 
     private PluginUtils pluginUtils;
 
-    public PluginJsonDeserializer(PluginUtils pluginUtils) {
+    public PluginJsonTypeAdapter(PluginUtils pluginUtils) {
        this.pluginUtils = pluginUtils;
     }
 
@@ -39,5 +41,14 @@ public class PluginJsonDeserializer<T> implements JsonDeserializer<Plugin<T>> {
 
     private Type resolvePluginConfigTypeByPluginName(String name) {
         return pluginUtils.resolvePluginConfig(name);
+    }
+
+    @Override
+    public JsonElement serialize(Plugin<T> src, Type typeOfSrc, JsonSerializationContext context) {
+        JsonObject retValue = context.serialize(src, PluginBase.class).getAsJsonObject();
+        if (null != src.getConfig()) {
+            retValue.add("config", context.serialize(src.getConfig()));
+        }
+        return retValue;
     }
 }
