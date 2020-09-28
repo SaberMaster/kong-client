@@ -1,6 +1,6 @@
 package com.i2bgod.kong.model.admin.base;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.i2bgod.kong.model.admin.base.annotation.KongEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,8 +24,8 @@ public class Certificate extends TagBase{
      * tags : ["user-level","low-priority"]
      */
 
-    @SerializedName("cert")
+    @JsonProperty("cert")
     private String cert;
-    @SerializedName("key")
+    @JsonProperty("key")
     private String key;
 }

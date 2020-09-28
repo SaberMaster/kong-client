@@ -1,9 +1,10 @@
 package com.i2bgod.kong;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -16,13 +17,13 @@ public class TestProperties {
     private String adminUrl;
     private String dblessAdminUrl;
 
-    public static TestProperties getTestConfig() throws FileNotFoundException {
+    public static TestProperties getTestConfig() throws IOException {
         InputStream inputStream = KongClient.class.getClassLoader().getResourceAsStream("test.json");
         if (null == inputStream) {
             throw new FileNotFoundException("test config not found!");
         }
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-        Gson gson = new Gson();
-        return gson.fromJson(inputStreamReader, TestProperties.class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(inputStreamReader, TestProperties.class);
     }
 }

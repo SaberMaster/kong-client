@@ -1,6 +1,6 @@
 package com.i2bgod.kong.model.admin.plugin.config;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.i2bgod.kong.model.admin.plugin.config.annoation.KongPluginConfig;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,34 +32,34 @@ public class RateLimiting {
      * fault_tolerant : true
      */
 
-    @SerializedName("policy")
+    @JsonProperty("policy")
     private String policy;
-    @SerializedName("redis_timeout")
+    @JsonProperty("redis_timeout")
     private Integer redisTimeout;
-    @SerializedName("limit_by")
+    @JsonProperty("limit_by")
     private String limitBy;
-    @SerializedName("hide_client_headers")
+    @JsonProperty("hide_client_headers")
     private Boolean hideClientHeaders;
-    @SerializedName("year")
+    @JsonProperty("year")
     private Integer year;
-    @SerializedName("month")
+    @JsonProperty("month")
     private Integer month;
-    @SerializedName("day")
+    @JsonProperty("day")
     private Integer day;
-    @SerializedName("hour")
+    @JsonProperty("hour")
     private Integer hour;
-    @SerializedName("minute")
+    @JsonProperty("minute")
     private Integer minute;
-    @SerializedName("second")
+    @JsonProperty("second")
     private Integer second;
-    @SerializedName("redis_password")
+    @JsonProperty("redis_password")
     private String redisPassword;
-    @SerializedName("redis_host")
+    @JsonProperty("redis_host")
     private String redisHost;
-    @SerializedName("redis_port")
+    @JsonProperty("redis_port")
     private Integer redisPort;
-    @SerializedName("redis_database")
+    @JsonProperty("redis_database")
     private Integer redisDatabase;
-    @SerializedName("fault_tolerant")
+    @JsonProperty("fault_tolerant")
     private Boolean faultTolerant;
 }

@@ -1,6 +1,6 @@
 package com.i2bgod.kong.model.admin.base;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.i2bgod.kong.model.admin.base.annotation.KongEntity;
 import com.i2bgod.kong.model.admin.plugin.config.annoation.KongPluginConfig;
 import lombok.Data;
@@ -29,7 +29,7 @@ public class Plugin<T> extends PluginBase {
      * service : null
      */
 
-    @SerializedName("config")
+    @JsonProperty("config")
     private T config;
 
     public Plugin(PluginBase pluginBase) {

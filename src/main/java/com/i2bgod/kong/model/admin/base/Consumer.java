@@ -1,6 +1,6 @@
 package com.i2bgod.kong.model.admin.base;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.i2bgod.kong.model.admin.base.annotation.KongEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,8 +24,8 @@ public class Consumer extends TagBase{
      * tags : ["user-level","low-priority"]
      */
 
-    @SerializedName("username")
+    @JsonProperty("username")
     private String username;
-    @SerializedName("custom_id")
+    @JsonProperty("custom_id")
     private String customId;
 }

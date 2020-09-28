@@ -1,17 +1,19 @@
 package com.i2bgod.kong;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.i2bgod.kong.bean.ClientConfig;
 import com.i2bgod.kong.exception.KongClientException;
-import com.i2bgod.kong.gson.CustomGsonDecoder;
-import com.i2bgod.kong.model.adapter.PluginJsonTypeAdapter;
+import com.i2bgod.kong.gson.CustomJacksonDecoder;
+import com.i2bgod.kong.gson.CustomJacksonEncoder;
+import com.i2bgod.kong.model.adapter.PluginJsonDeserializer;
 import com.i2bgod.kong.model.admin.base.Plugin;
 import com.i2bgod.kong.model.codec.KongAdminErrorDecoder;
 import com.i2bgod.kong.util.PluginUtils;
 import com.i2bgod.kong.util.SchemaUtils;
 import feign.Feign;
-import feign.gson.GsonEncoder;
 import org.apache.commons.collections.MapUtils;
 
 import javax.annotation.Nullable;
@@ -33,11 +35,11 @@ public class AdminClient {
 
     private PluginUtils pluginUtils;
 
-    public Gson getGson() {
-        return gson;
-    }
+    private ObjectMapper jsonUtil;
 
-    public Gson gson;
+    public ObjectMapper getJsonUtil() {
+        return jsonUtil;
+    }
 
     public AdminClient(AdminClientConfig config) {
         this.config = new ClientConfig(config.getExtraScanPackage());
@@ -89,12 +91,19 @@ public class AdminClient {
     }
 
     private Feign.Builder getFeignBuilder(AdminClientConfig adminClientConfig) {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(Plugin.class, new PluginJsonTypeAdapter<>(this.pluginUtils));
-        this.gson = gsonBuilder.create();
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        SimpleModule simpleModule = new SimpleModule();
+        simpleModule.addDeserializer(Plugin.class, new PluginJsonDeserializer<>(this.pluginUtils));
+//        ObjectJsonSerializer objectJsonSerializer = new ObjectJsonSerializer();
+//        config.getKongEntityClassMap().forEach((k, v) -> {
+//           simpleModule.addSerializer(v, objectJsonSerializer);
+//        });
+        this.jsonUtil = objectMapper;
         return Feign.builder()
-                .decoder(new CustomGsonDecoder(gson))
-                .encoder(new GsonEncoder(gson))
+                .decoder(new CustomJacksonDecoder(jsonUtil))
+                .encoder(new CustomJacksonEncoder(jsonUtil))
                 .decode404()
                 .errorDecoder(new KongAdminErrorDecoder())
                 .retryer(adminClientConfig.getRetryer())

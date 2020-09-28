@@ -1,6 +1,6 @@
 package com.i2bgod.kong.model.admin.base;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.i2bgod.kong.model.admin.base.annotation.KongEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,17 +31,17 @@ public class Upstream extends TagBase{
      * tags : ["user-level","low-priority"]
      */
 
-    @SerializedName("algorithm")
+    @JsonProperty("algorithm")
     private String algorithm;
-    @SerializedName("hash_on")
+    @JsonProperty("hash_on")
     private String hashOn;
-    @SerializedName("hash_fallback")
+    @JsonProperty("hash_fallback")
     private String hashFallback;
-    @SerializedName("hash_on_cookie_path")
+    @JsonProperty("hash_on_cookie_path")
     private String hashOnCookiePath;
-    @SerializedName("slots")
+    @JsonProperty("slots")
     private Integer slots;
-    @SerializedName("healthchecks")
+    @JsonProperty("healthchecks")
     private HealthchecksBean healthchecks;
 
     @NoArgsConstructor
@@ -53,11 +53,11 @@ public class Upstream extends TagBase{
          * passive : {"unhealthy":{"http_failures":0,"http_statuses":[429,500,503],"tcp_failures":0,"timeouts":0},"type":"http","healthy":{"successes":0,"http_statuses":[200,201,202,203,204,205,206,207,208,226,300,301,302,303,304,305,306,307,308]}}
          */
 
-        @SerializedName("active")
+        @JsonProperty("active")
         private ActiveBean active;
-        @SerializedName("passive")
+        @JsonProperty("passive")
         private PassiveBean passive;
-        @SerializedName("threshold")
+        @JsonProperty("threshold")
         private Integer threshold;
 
         @NoArgsConstructor
@@ -75,21 +75,21 @@ public class Upstream extends TagBase{
              * type : http
              */
 
-            @SerializedName("https_verify_certificate")
+            @JsonProperty("https_verify_certificate")
             private Boolean httpsVerifyCertificate;
-            @SerializedName("unhealthy")
+            @JsonProperty("unhealthy")
             private UnhealthyBean unhealthy;
-            @SerializedName("http_path")
+            @JsonProperty("http_path")
             private String httpPath;
-            @SerializedName("timeout")
+            @JsonProperty("timeout")
             private Integer timeout;
-            @SerializedName("healthy")
+            @JsonProperty("healthy")
             private HealthyBean healthy;
-            @SerializedName("https_sni")
+            @JsonProperty("https_sni")
             private String httpsSni;
-            @SerializedName("concurrency")
+            @JsonProperty("concurrency")
             private Integer concurrency;
-            @SerializedName("type")
+            @JsonProperty("type")
             private String type;
 
             @NoArgsConstructor
@@ -104,15 +104,15 @@ public class Upstream extends TagBase{
                  * Integererval : 0
                  */
 
-                @SerializedName("tcp_failures")
+                @JsonProperty("tcp_failures")
                 private Integer tcpFailures;
-                @SerializedName("timeouts")
+                @JsonProperty("timeouts")
                 private Integer timeouts;
-                @SerializedName("http_failures")
+                @JsonProperty("http_failures")
                 private Integer httpFailures;
-                @SerializedName("interval")
+                @JsonProperty("interval")
                 private Integer interval;
-                @SerializedName("http_statuses")
+                @JsonProperty("http_statuses")
                 private List<Integer> httpStatuses;
             }
 
@@ -126,11 +126,11 @@ public class Upstream extends TagBase{
                  * successes : 0
                  */
 
-                @SerializedName("interval")
+                @JsonProperty("interval")
                 private Integer interval;
-                @SerializedName("successes")
+                @JsonProperty("successes")
                 private Integer successes;
-                @SerializedName("http_statuses")
+                @JsonProperty("http_statuses")
                 private List<Integer> httpStatuses;
             }
         }
@@ -145,11 +145,11 @@ public class Upstream extends TagBase{
              * healthy : {"successes":0,"http_statuses":[200,201,202,203,204,205,206,207,208,226,300,301,302,303,304,305,306,307,308]}
              */
 
-            @SerializedName("unhealthy")
+            @JsonProperty("unhealthy")
             private UnhealthyBeanX unhealthy;
-            @SerializedName("type")
+            @JsonProperty("type")
             private String type;
-            @SerializedName("healthy")
+            @JsonProperty("healthy")
             private HealthyBeanX healthy;
 
             @NoArgsConstructor
@@ -163,13 +163,13 @@ public class Upstream extends TagBase{
                  * timeouts : 0
                  */
 
-                @SerializedName("http_failures")
+                @JsonProperty("http_failures")
                 private Integer httpFailures;
-                @SerializedName("tcp_failures")
+                @JsonProperty("tcp_failures")
                 private Integer tcpFailures;
-                @SerializedName("timeouts")
+                @JsonProperty("timeouts")
                 private Integer timeouts;
-                @SerializedName("http_statuses")
+                @JsonProperty("http_statuses")
                 private List<Integer> httpStatuses;
             }
 
@@ -182,9 +182,9 @@ public class Upstream extends TagBase{
                  * http_statuses : [200,201,202,203,204,205,206,207,208,226,300,301,302,303,304,305,306,307,308]
                  */
 
-                @SerializedName("successes")
+                @JsonProperty("successes")
                 private Integer successes;
-                @SerializedName("http_statuses")
+                @JsonProperty("http_statuses")
                 private List<Integer> httpStatuses;
             }
         }

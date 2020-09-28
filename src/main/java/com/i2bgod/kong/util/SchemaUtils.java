@@ -1,11 +1,13 @@
 package com.i2bgod.kong.util;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.i2bgod.kong.exception.KongClientException;
 import com.i2bgod.kong.model.adapter.DblessJsonSerializer;
 import com.i2bgod.kong.model.admin.base.annotation.KongEntity;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -18,6 +20,7 @@ import java.util.Optional;
  * @author: Lyn
  * @date: 08/09/2020
  */
+@Slf4j
 public class SchemaUtils {
     private Map<String, Class<?>> kongEntityClassMap;
 
@@ -53,10 +56,18 @@ public class SchemaUtils {
     public String generateDblessJsonStr(Map<String, Object> config, String formatVersion) {
         config.put("_format_version", Optional.ofNullable(formatVersion).orElse("1.1"));
 
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        kongEntityClassMap.values().forEach(entity -> gsonBuilder.registerTypeAdapter(entity, new DblessJsonSerializer<>(pluginUtils)));
-        Gson gson = gsonBuilder.create();
-        return gson.toJson(config);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        SimpleModule simpleModule = new SimpleModule();
+        kongEntityClassMap.values().forEach(entity ->
+                simpleModule.addSerializer(entity, new DblessJsonSerializer<>(pluginUtils)));
+        objectMapper.registerModule(simpleModule);
+        try {
+            return objectMapper.writeValueAsString(config);
+        } catch (JsonProcessingException e) {
+            log.warn("occur exception on serialize dbless json str", e);
+            throw new RuntimeException(e);
+        }
     }
 
 

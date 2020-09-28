@@ -21,7 +21,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * @author: Lyn
@@ -39,7 +39,7 @@ class TargetServiceTest {
     public static String TMP_ID = "be71ac8d-d0fd-4fa4-9603-d16d65926ccc";
 
     @BeforeAll
-    static void setUp() throws FileNotFoundException {
+    static void setUp() throws IOException {
         TestProperties testConfig = TestProperties.getTestConfig();
         KongClient kongClientUnderTest = new KongClient();
         AdminClientConfig adminClientConfig = new AdminClientConfig();

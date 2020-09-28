@@ -1,6 +1,6 @@
 package com.i2bgod.kong.model.admin.base;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.i2bgod.kong.model.admin.base.annotation.KongFK;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,19 +17,19 @@ import java.util.List;
 @Data
 public class PluginBase extends TagBase {
 
-    @SerializedName("run_on")
+    @JsonProperty("run_on")
     private String runOn;
-    @SerializedName("enabled")
+    @JsonProperty("enabled")
     private Boolean enabled;
-    @SerializedName("consumer")
+    @JsonProperty("consumer")
     @KongFK
     private Consumer consumer;
-    @SerializedName("route")
+    @JsonProperty("route")
     @KongFK
     private Route route;
-    @SerializedName("service")
+    @JsonProperty("service")
     @KongFK
     private Service service;
-    @SerializedName("protocols")
+    @JsonProperty("protocols")
     private List<String> protocols;
 }

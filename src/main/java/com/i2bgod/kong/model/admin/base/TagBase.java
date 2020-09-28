@@ -1,6 +1,6 @@
 package com.i2bgod.kong.model.admin.base;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.ToString;
 
@@ -13,6 +13,6 @@ import java.util.List;
 @Data
 @ToString(callSuper = true)
 public class TagBase extends Base {
-    @SerializedName("tags")
+    @JsonProperty("tags")
     private List<String> tags;
 }

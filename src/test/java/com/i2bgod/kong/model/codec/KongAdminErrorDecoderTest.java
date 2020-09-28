@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 @Execution(ExecutionMode.CONCURRENT)
 class KongAdminErrorDecoderTest {
@@ -20,7 +20,7 @@ class KongAdminErrorDecoderTest {
     private static ServiceService targetService;
 
     @BeforeAll
-    static void setUp() throws FileNotFoundException {
+    static void setUp() throws IOException {
         TestProperties testConfig = TestProperties.getTestConfig();
         KongClient kongClientUnderTest = new KongClient();
         AdminClientConfig adminClientConfig = new AdminClientConfig();

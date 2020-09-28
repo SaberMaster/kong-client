@@ -1,8 +1,10 @@
 package com.i2bgod.kong.model.admin.base;
 
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.i2bgod.kong.model.adapter.DateDoubleFormatTypeAdapter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.i2bgod.kong.model.adapter.DateDoubleJsonDeserializer;
+import com.i2bgod.kong.model.adapter.DateDoubleJsonSerializer;
 import com.i2bgod.kong.model.admin.base.annotation.KongEntity;
 import com.i2bgod.kong.model.admin.base.annotation.KongFK;
 import lombok.Data;
@@ -31,18 +33,19 @@ public class Target {
      * tags : ["user-level","low-priority"]
      */
 
-    @SerializedName("id")
+    @JsonProperty("id")
     private String id;
-    @SerializedName("upstream")
+    @JsonProperty("upstream")
     @KongFK
     private Upstream upstream;
-    @SerializedName("target")
+    @JsonProperty("target")
     private String target;
-    @SerializedName("weight")
+    @JsonProperty("weight")
     private Integer weight;
-    @SerializedName("created_at")
-    @JsonAdapter(DateDoubleFormatTypeAdapter.class)
+    @JsonProperty("created_at")
+    @JsonSerialize(using = DateDoubleJsonSerializer.class)
+    @JsonDeserialize(using = DateDoubleJsonDeserializer.class)
     private Date createAt;
-    @SerializedName("tags")
+    @JsonProperty("tags")
     private List<String> tags;
 }

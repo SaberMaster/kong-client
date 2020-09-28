@@ -1,6 +1,6 @@
 package com.i2bgod.kong.model.admin.plugin.config;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.i2bgod.kong.model.admin.plugin.config.annoation.KongPluginConfig;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,8 +16,8 @@ import java.util.List;
 @KongPluginConfig(schemaName = "ip-restriction")
 public class IpRestriction {
 
-    @SerializedName("blacklist")
+    @JsonProperty("blacklist")
     private List<String> blacklist;
-    @SerializedName("whitelist")
+    @JsonProperty("whitelist")
     private List<String> whitelist;
 }

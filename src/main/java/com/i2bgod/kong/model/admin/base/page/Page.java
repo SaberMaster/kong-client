@@ -1,8 +1,8 @@
 package com.i2bgod.kong.model.admin.base.page;
 
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.i2bgod.kong.model.adapter.EmptyArrayTypeAdapter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.i2bgod.kong.model.adapter.EmptyArrayJsonDeserializer;
 import lombok.Data;
 import okhttp3.HttpUrl;
 import org.apache.commons.lang3.StringUtils;
@@ -16,12 +16,12 @@ import java.util.List;
  */
 @Data
 public class Page<T> {
-    @SerializedName("next")
+    @JsonProperty("next")
     String next;
-    @SerializedName("offset")
+    @JsonProperty("offset")
     String offset;
-    @SerializedName("data")
-    @JsonAdapter(EmptyArrayTypeAdapter.class)
+    @JsonProperty("data")
+    @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
     List<T> data;
 
 

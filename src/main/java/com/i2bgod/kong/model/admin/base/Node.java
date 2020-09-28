@@ -1,8 +1,8 @@
 package com.i2bgod.kong.model.admin.base;
 
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.i2bgod.kong.model.adapter.EmptyArrayTypeAdapter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.i2bgod.kong.model.adapter.EmptyArrayJsonDeserializer;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,368 +17,368 @@ import java.util.Map;
 @NoArgsConstructor
 public class Node {
 
-    @SerializedName("plugins")
+    @JsonProperty("plugins")
     private PluginsBean plugins;
-    @SerializedName("tagline")
+    @JsonProperty("tagline")
     private String tagline;
-    @SerializedName("configuration")
+    @JsonProperty("configuration")
     private ConfigurationBean configuration;
-    @SerializedName("version")
+    @JsonProperty("version")
     private String version;
-    @SerializedName("node_id")
+    @JsonProperty("node_id")
     private String nodeId;
-    @SerializedName("lua_version")
+    @JsonProperty("lua_version")
     private String luaVersion;
-    @SerializedName("prng_seeds")
+    @JsonProperty("prng_seeds")
     private Map<String, Long> prngSeeds;
-    @SerializedName("timers")
+    @JsonProperty("timers")
     private Map<String, Integer> timers;
-    @SerializedName("hostname")
+    @JsonProperty("hostname")
     private String hostname;
 
     @Data
     @NoArgsConstructor
     public static class PluginsBean {
 
-        @SerializedName("available_on_server")
+        @JsonProperty("available_on_server")
         private Map<String, Boolean> availableOnServer;
-        @SerializedName("enabled_in_cluster")
+        @JsonProperty("enabled_in_cluster")
         private List<String> enabledInCluster;
     }
     
     @Data
     @NoArgsConstructor
     public static class ConfigurationBean {
-        @SerializedName("service_redis_timeout")
+        @JsonProperty("service_redis_timeout")
         private Integer serviceRedisTimeout;
-        @SerializedName("proxy_access_log")
+        @JsonProperty("proxy_access_log")
         private String proxyAccessLog;
-        @SerializedName("prefix")
+        @JsonProperty("prefix")
         private String prefix;
-        @SerializedName("orchsym_cluster_poll_Integererval")
+        @JsonProperty("orchsym_cluster_poll_Integererval")
         private Integer orchsymClusterPollInterval;
-        @SerializedName("loaded_plugins")
+        @JsonProperty("loaded_plugins")
         private Map<String, Boolean> loadedPlugins;
-        @SerializedName("cassandra_username")
+        @JsonProperty("cassandra_username")
         private String cassandraUsername;
-        @SerializedName("ssl_cert_key")
+        @JsonProperty("ssl_cert_key")
         private String sslCertKey;
-        @SerializedName("admin_ssl_cert_key")
+        @JsonProperty("admin_ssl_cert_key")
         private String adminSslCertKey;
-        @SerializedName("dns_resolver")
-        @JsonAdapter(EmptyArrayTypeAdapter.class)
+        @JsonProperty("dns_resolver")
+        @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
         private List<String> dnsResolver;
-        @SerializedName("pg_user")
+        @JsonProperty("pg_user")
         private String pgUser;
-        @SerializedName("mem_cache_size")
+        @JsonProperty("mem_cache_size")
         private String memCacheSize;
         //todo: check is ok
-        @SerializedName("nginx_admin_directives")
+        @JsonProperty("nginx_admin_directives")
         private Map<String, Object> nginxAdminDirectives;
-        @SerializedName("ssl_ciphers")
+        @JsonProperty("ssl_ciphers")
         private String sslCiphers;
-        @SerializedName("orchsym_body_filter_execution_allowed_payload_size")
+        @JsonProperty("orchsym_body_filter_execution_allowed_payload_size")
         private Integer orchsymBodyFilterExecutionAllowedPayloadSize;
-        @SerializedName("pg_host")
+        @JsonProperty("pg_host")
         private String pgHost;
-        @SerializedName("nginx_acc_logs")
+        @JsonProperty("nginx_acc_logs")
         private String nginxAccLogs;
-        @SerializedName("service_redis_host")
+        @JsonProperty("service_redis_host")
         private String serviceRedisHost;
-        @SerializedName("client_max_body_size")
+        @JsonProperty("client_max_body_size")
         private String clientMaxBodySize;
-        @SerializedName("nginx_kong_stream_conf")
+        @JsonProperty("nginx_kong_stream_conf")
         private String nginxKongStreamConf;
-        @SerializedName("client_ssl_cert_default")
+        @JsonProperty("client_ssl_cert_default")
         private String clientSslCertDefault;
         //todo: check is ok
-        @SerializedName("stream_listeners")
-        @JsonAdapter(EmptyArrayTypeAdapter.class)
+        @JsonProperty("stream_listeners")
+        @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
         private List<Object> streamListeners;
-        @SerializedName("pg_semaphore_timeout")
+        @JsonProperty("pg_semaphore_timeout")
         private Integer pgSemaphoreTimeout;
-        @SerializedName("dns_no_sync")
+        @JsonProperty("dns_no_sync")
         private Boolean dnsNoSync;
-        @SerializedName("db_update_propagation")
+        @JsonProperty("db_update_propagation")
         private Integer dbUpdatePropagation;
-        @SerializedName("lua_ssl_verify_depth")
+        @JsonProperty("lua_ssl_verify_depth")
         private Integer luaSslVerifyDepth;
-        @SerializedName("nginx_err_logs")
+        @JsonProperty("nginx_err_logs")
         private String nginxErrLogs;
-        @SerializedName("db_update_frequency")
+        @JsonProperty("db_update_frequency")
         private Integer dbUpdateFrequency;
-        @SerializedName("cassandra_port")
+        @JsonProperty("cassandra_port")
         private Integer cassandraPort;
-        @SerializedName("dns_error_ttl")
+        @JsonProperty("dns_error_ttl")
         private Integer dnsErrorTtl;
-        @SerializedName("nginx_conf")
+        @JsonProperty("nginx_conf")
         private String nginxConf;
         //todo: check is ok
-        @SerializedName("nginx_stream_directives")
+        @JsonProperty("nginx_stream_directives")
         private Map<String, Object> nginxStreamDirectives;
-        @SerializedName("system_redis_host")
+        @JsonProperty("system_redis_host")
         private String systemRedisHost;
-        @SerializedName("cassandra_lb_policy")
+        @JsonProperty("cassandra_lb_policy")
         private String cassandraLbPolicy;
-        @SerializedName("nginx_optimizations")
+        @JsonProperty("nginx_optimizations")
         private Boolean nginxOptimizations;
-        @SerializedName("nginx_http_upstream_keepalive_timeout")
+        @JsonProperty("nginx_http_upstream_keepalive_timeout")
         private String nginxHttpUpstreamKeepaliveTimeout;
         //todo: check is ok
-        @SerializedName("nginx_sproxy_directives")
+        @JsonProperty("nginx_sproxy_directives")
         private Map<String, Object> nginxSproxyDirectives;
-        @SerializedName("origins")
-        @JsonAdapter(EmptyArrayTypeAdapter.class)
+        @JsonProperty("origins")
+        @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
         private List<String> origins;
-        @SerializedName("admin_ssl_cert")
+        @JsonProperty("admin_ssl_cert")
         private String adminSslCert;
-        @SerializedName("nginx_http_upstream_keepalive_requests")
+        @JsonProperty("nginx_http_upstream_keepalive_requests")
         private String nginxHttpUpstreamKeepaliveRequests;
-        @SerializedName("database")
+        @JsonProperty("database")
         private String database;
-        @SerializedName("anonymous_reports")
+        @JsonProperty("anonymous_reports")
         private Boolean anonymousReports;
-        @SerializedName("system_redis_database")
+        @JsonProperty("system_redis_database")
         private Integer systemRedisDatabase;
-        @SerializedName("lua_socket_pool_size")
+        @JsonProperty("lua_socket_pool_size")
         private Integer luaSocketPoolSize;
-        @SerializedName("pg_database")
+        @JsonProperty("pg_database")
         private String pgDatabase;
-        @SerializedName("nginx_worker_processes")
+        @JsonProperty("nginx_worker_processes")
         private String nginxWorkerProcesses;
-        @SerializedName("ssl_cipher_suite")
+        @JsonProperty("ssl_cipher_suite")
         private String sslCipherSuite;
-        @SerializedName("lua_package_cpath")
+        @JsonProperty("lua_package_cpath")
         private String luaPackageCpath;
-        @SerializedName("proxy_error_log")
+        @JsonProperty("proxy_error_log")
         private String proxyErrorLog;
-        @SerializedName("data_consistency")
+        @JsonProperty("data_consistency")
         private Boolean dataConsistency;
-        @SerializedName("pg_ssl_verify")
+        @JsonProperty("pg_ssl_verify")
         private Boolean pgSslVerify;
-        @SerializedName("system_redis_timeout")
+        @JsonProperty("system_redis_timeout")
         private Integer systemRedisTimeout;
-        @SerializedName("lua_package_path")
+        @JsonProperty("lua_package_path")
         private String luaPackagePath;
-        @SerializedName("nginx_pid")
+        @JsonProperty("nginx_pid")
         private String nginxPid;
-        @SerializedName("upstream_keepalive")
+        @JsonProperty("upstream_keepalive")
         private Integer upstreamKeepalive;
-        @SerializedName("orchsym_body_filter_execution_timeout")
+        @JsonProperty("orchsym_body_filter_execution_timeout")
         private Integer orchsymBodyFilterExecutionTimeout;
-        @SerializedName("data_url")
+        @JsonProperty("data_url")
         private String dataUrl;
-        @SerializedName("error_default_type")
+        @JsonProperty("error_default_type")
         private String errorDefaultType;
-        @SerializedName("orchsym_env_path")
+        @JsonProperty("orchsym_env_path")
         private Boolean orchsymEnvPath;
-        @SerializedName("dns_stale_ttl")
+        @JsonProperty("dns_stale_ttl")
         private Integer dnsStaleTtl;
-        @SerializedName("proxy_ssl_enabled")
+        @JsonProperty("proxy_ssl_enabled")
         private Boolean proxySslEnabled;
-        @SerializedName("nginx_http_upstream_keepalive")
+        @JsonProperty("nginx_http_upstream_keepalive")
         private String nginxHttpUpstreamKeepalive;
-        @SerializedName("enabled_headers")
+        @JsonProperty("enabled_headers")
         private Map<String, Boolean> enabledHeaders;
-        @SerializedName("nginx_http_ssl_protocols")
+        @JsonProperty("nginx_http_ssl_protocols")
         private String nginxHttpSslProtocols;
-        @SerializedName("system_redis_port")
+        @JsonProperty("system_redis_port")
         private Integer systemRedisPort;
-        @SerializedName("db_resurrect_ttl")
+        @JsonProperty("db_resurrect_ttl")
         private Integer dbResurrectTtl;
-        @SerializedName("cassandra_timeout")
+        @JsonProperty("cassandra_timeout")
         private Integer cassandraTimeout;
-        @SerializedName("cassandra_consistency")
+        @JsonProperty("cassandra_consistency")
         private String cassandraConsistency;
-        @SerializedName("db_cache_ttl")
+        @JsonProperty("db_cache_ttl")
         private Integer dbCacheTtl;
-        @SerializedName("admin_error_log")
+        @JsonProperty("admin_error_log")
         private String adminErrorLog;
-        @SerializedName("admin_ssl_cert_default")
+        @JsonProperty("admin_ssl_cert_default")
         private String adminSslCertDefault;
-        @SerializedName("dns_not_found_ttl")
+        @JsonProperty("dns_not_found_ttl")
         private Integer dnsNotFoundTtl;
-        @SerializedName("pg_ssl")
+        @JsonProperty("pg_ssl")
         private Boolean pgSsl;
-        @SerializedName("cassandra_schema_consensus_timeout")
+        @JsonProperty("cassandra_schema_consensus_timeout")
         private Integer cassandraSchemaConsensusTimeout;
-        @SerializedName("pg_timeout")
+        @JsonProperty("pg_timeout")
         private Integer pgTimeout;
-        @SerializedName("cassandra_repl_strategy")
+        @JsonProperty("cassandra_repl_strategy")
         private String cassandraReplStrategy;
-        @SerializedName("client_ssl")
+        @JsonProperty("client_ssl")
         private Boolean clientSsl;
-        @SerializedName("service_redis_database")
+        @JsonProperty("service_redis_database")
         private Integer serviceRedisDatabase;
-        @SerializedName("log_level")
+        @JsonProperty("log_level")
         private String logLevel;
-        @SerializedName("kong_env")
+        @JsonProperty("kong_env")
         private String kongEnv;
-        @SerializedName("nginx_kong_conf")
+        @JsonProperty("nginx_kong_conf")
         private String nginxKongConf;
-        @SerializedName("real_ip_header")
+        @JsonProperty("real_ip_header")
         private String realIpHeader;
-        @SerializedName("dns_hostsfile")
+        @JsonProperty("dns_hostsfile")
         private String dnsHostsfile;
-        @SerializedName("pg_max_concurrent_queries")
+        @JsonProperty("pg_max_concurrent_queries")
         private Integer pgMaxConcurrentQueries;
-        @SerializedName("ssl_cert")
+        @JsonProperty("ssl_cert")
         private String sslCert;
-        @SerializedName("env_id")
+        @JsonProperty("env_id")
         private String envId;
-        @SerializedName("admin_ssl_cert_key_default")
+        @JsonProperty("admin_ssl_cert_key_default")
         private String adminSslCertKeyDefault;
-        @SerializedName("cassandra_ssl_verify")
+        @JsonProperty("cassandra_ssl_verify")
         private Boolean cassandraSslVerify;
-        @SerializedName("service_redis_port")
+        @JsonProperty("service_redis_port")
         private Integer serviceRedisPort;
-        @SerializedName("orchsym_access_log")
+        @JsonProperty("orchsym_access_log")
         private String orchsymAccessLog;
-        @SerializedName("real_ip_recursive")
+        @JsonProperty("real_ip_recursive")
         private String realIpRecursive;
-        @SerializedName("cassandra_repl_factor")
+        @JsonProperty("cassandra_repl_factor")
         private Integer cassandraReplFactor;
-        @SerializedName("client_ssl_cert_key_default")
+        @JsonProperty("client_ssl_cert_key_default")
         private String clientSslCertKeyDefault;
-        @SerializedName("nginx_daemon")
+        @JsonProperty("nginx_daemon")
         private String nginxDaemon;
-        @SerializedName("router_consistency")
+        @JsonProperty("router_consistency")
         private String routerConsistency;
         //todo: check is ok
-        @SerializedName("nginx_proxy_directives")
-        @JsonAdapter(EmptyArrayTypeAdapter.class)
+        @JsonProperty("nginx_proxy_directives")
+        @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
         private List<Object> nginxProxyDirectives;
-        @SerializedName("admin_access_log")
+        @JsonProperty("admin_access_log")
         private String adminAccessLog;
-        @SerializedName("pg_port")
+        @JsonProperty("pg_port")
         private Integer pgPort;
-        @SerializedName("ssl_cert_csr_default")
+        @JsonProperty("ssl_cert_csr_default")
         private String sslCertCsrDefault;
-        @SerializedName("client_body_buffer_size")
+        @JsonProperty("client_body_buffer_size")
         private String clientBodyBufferSize;
-        @SerializedName("ssl_preread_enabled")
+        @JsonProperty("ssl_preread_enabled")
         private Boolean sslPrereadEnabled;
-        @SerializedName("ssl_cert_key_default")
+        @JsonProperty("ssl_cert_key_default")
         private String sslCertKeyDefault;
-        @SerializedName("admin_acc_logs")
+        @JsonProperty("admin_acc_logs")
         private String adminAccLogs;
-        @SerializedName("cassandra_keyspace")
+        @JsonProperty("cassandra_keyspace")
         private String cassandraKeyspace;
-        @SerializedName("ssl_cert_default")
+        @JsonProperty("ssl_cert_default")
         private String sslCertDefault;
-        @SerializedName("cassandra_ssl")
+        @JsonProperty("cassandra_ssl")
         private Boolean cassandraSsl;
-        @SerializedName("admin_ssl_enabled")
+        @JsonProperty("admin_ssl_enabled")
         private Boolean adminSslEnabled;
-        @SerializedName("plugins")
-        @JsonAdapter(EmptyArrayTypeAdapter.class)
+        @JsonProperty("plugins")
+        @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
         private List<String> plugins;
-        @SerializedName("admin_listen")
-        @JsonAdapter(EmptyArrayTypeAdapter.class)
+        @JsonProperty("admin_listen")
+        @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
         private List<String> adminListen;
-        @SerializedName("trusted_ips")
-        @JsonAdapter(EmptyArrayTypeAdapter.class)
+        @JsonProperty("trusted_ips")
+        @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
         private List<String> trustedIps;
-        @SerializedName("cassandra_data_centers")
-        @JsonAdapter(EmptyArrayTypeAdapter.class)
+        @JsonProperty("cassandra_data_centers")
+        @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
         private List<String> cassandraDataCenters;
-        @SerializedName("nginx_http_upstream_directives")
-        @JsonAdapter(EmptyArrayTypeAdapter.class)
+        @JsonProperty("nginx_http_upstream_directives")
+        @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
         private List<NginxHttpUpstreamDirectivesBean> nginxHttpUpstreamDirectives;
-        @SerializedName("proxy_listen")
-        @JsonAdapter(EmptyArrayTypeAdapter.class)
+        @JsonProperty("proxy_listen")
+        @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
         private List<String> proxyListen;
-        @SerializedName("stream_listen")
-        @JsonAdapter(EmptyArrayTypeAdapter.class)
+        @JsonProperty("stream_listen")
+        @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
         private List<String> streamListen;
-        @SerializedName("dns_order")
-        @JsonAdapter(EmptyArrayTypeAdapter.class)
+        @JsonProperty("dns_order")
+        @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
         private List<String> dnsOrder;
-        @SerializedName("headers")
-        @JsonAdapter(EmptyArrayTypeAdapter.class)
+        @JsonProperty("headers")
+        @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
         private List<String> headers;
-        @SerializedName("nginx_http_directives")
-        @JsonAdapter(EmptyArrayTypeAdapter.class)
+        @JsonProperty("nginx_http_directives")
+        @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
         private List<NginxHttpDirectivesBean> nginxHttpDirectives;
-        @SerializedName("cassandra_contact_poIntegers")
-        @JsonAdapter(EmptyArrayTypeAdapter.class)
+        @JsonProperty("cassandra_contact_poIntegers")
+        @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
         private List<String> cassandraContactPoIntegers;
-        @SerializedName("proxy_listeners")
-        @JsonAdapter(EmptyArrayTypeAdapter.class)
+        @JsonProperty("proxy_listeners")
+        @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
         private List<ProxyListenersBean> proxyListeners;
-        @SerializedName("db_cache_warmup_entities")
-        @JsonAdapter(EmptyArrayTypeAdapter.class)
+        @JsonProperty("db_cache_warmup_entities")
+        @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
         private List<String> dbCacheWarmupEntities;
-        @SerializedName("admin_listeners")
-        @JsonAdapter(EmptyArrayTypeAdapter.class)
+        @JsonProperty("admin_listeners")
+        @JsonDeserialize(using = EmptyArrayJsonDeserializer.class)
         private List<AdminListenersBean> adminListeners;
 
 
         @Data
         @NoArgsConstructor
         public static class NginxHttpUpstreamDirectivesBean {
-            @SerializedName("value")
+            @JsonProperty("value")
             private String value;
-            @SerializedName("name")
+            @JsonProperty("name")
             private String name;
         }
 
         @NoArgsConstructor
         @Data
         public static class NginxHttpDirectivesBean {
-            @SerializedName("value")
+            @JsonProperty("value")
             private String value;
-            @SerializedName("name")
+            @JsonProperty("name")
             private String name;
         }
 
         @NoArgsConstructor
         @Data
         public static class ProxyListenersBean {
-            @SerializedName("listener")
+            @JsonProperty("listener")
             private String listener;
-            @SerializedName("proxy_protocol")
+            @JsonProperty("proxy_protocol")
             private Boolean proxyProtocol;
-            @SerializedName("reuseport")
+            @JsonProperty("reuseport")
             private Boolean reuseport;
-            @SerializedName("transparent")
+            @JsonProperty("transparent")
             private Boolean transparent;
-            @SerializedName("ssl")
+            @JsonProperty("ssl")
             private Boolean ssl;
-            @SerializedName("ip")
+            @JsonProperty("ip")
             private String ip;
-            @SerializedName("deferred")
+            @JsonProperty("deferred")
             private Boolean deferred;
-            @SerializedName("http2")
+            @JsonProperty("http2")
             private Boolean http2;
-            @SerializedName("port")
+            @JsonProperty("port")
             private Integer port;
-            @SerializedName("bind")
+            @JsonProperty("bind")
             private Boolean bind;
         }
 
         @NoArgsConstructor
         @Data
         public static class AdminListenersBean {
-            @SerializedName("listener")
+            @JsonProperty("listener")
             private String listener;
-            @SerializedName("proxy_protocol")
+            @JsonProperty("proxy_protocol")
             private Boolean proxyProtocol;
-            @SerializedName("reuseport")
+            @JsonProperty("reuseport")
             private Boolean reuseport;
-            @SerializedName("transparent")
+            @JsonProperty("transparent")
             private Boolean transparent;
-            @SerializedName("ssl")
+            @JsonProperty("ssl")
             private Boolean ssl;
-            @SerializedName("ip")
+            @JsonProperty("ip")
             private String ip;
-            @SerializedName("deferred")
+            @JsonProperty("deferred")
             private Boolean deferred;
-            @SerializedName("http2")
+            @JsonProperty("http2")
             private Boolean http2;
-            @SerializedName("port")
+            @JsonProperty("port")
             private Integer port;
-            @SerializedName("bind")
+            @JsonProperty("bind")
             private Boolean bind;
         }
     }
@@ -386,9 +386,9 @@ public class Node {
     @Data
     @NoArgsConstructor
     public static class TimersBean {
-        @SerializedName("pending")
+        @JsonProperty("pending")
         private Integer pending;
-        @SerializedName("running")
+        @JsonProperty("running")
         private Integer running;
     }
 }

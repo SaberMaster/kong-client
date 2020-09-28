@@ -1,8 +1,8 @@
 package com.i2bgod.kong.gson;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
-import feign.gson.GsonDecoder;
+import feign.jackson.JacksonDecoder;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -11,14 +11,14 @@ import java.lang.reflect.Type;
  * @author: Lyn
  * @date: 26/08/2020
  */
-public class CustomGsonDecoder extends GsonDecoder {
+public class CustomJacksonDecoder extends JacksonDecoder {
 
-    public CustomGsonDecoder() {
+    public CustomJacksonDecoder() {
         super();
     }
 
-    public CustomGsonDecoder(Gson gson) {
-        super(gson);
+    public CustomJacksonDecoder(ObjectMapper objectMapper) {
+        super(objectMapper);
     }
 
     @Override

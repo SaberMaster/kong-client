@@ -17,7 +17,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * @author: Lyn
@@ -37,7 +37,7 @@ class SniServiceTest {
     private static CertificateService certificateService;
 
     @BeforeAll
-    static void setUp() throws FileNotFoundException {
+    static void setUp() throws IOException {
         TestProperties testConfig = TestProperties.getTestConfig();
         KongClient kongClientUnderTest = new KongClient();
         AdminClientConfig adminClientConfig = new AdminClientConfig();

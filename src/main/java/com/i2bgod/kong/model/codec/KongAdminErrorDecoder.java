@@ -1,7 +1,7 @@
 package com.i2bgod.kong.model.codec;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.i2bgod.kong.exception.KongClientException;
 import feign.Response;
 import feign.RetryableException;
@@ -22,8 +22,6 @@ import java.util.Map;
 public class KongAdminErrorDecoder implements ErrorDecoder {
     private final ErrorDecoder defaultErrorDecoder = new Default();
 
-    private static Gson gson = new Gson();
-
     @Override
     public Exception decode(String methodKey, Response response) {
         //todo: impl more detail in the future
@@ -40,14 +38,22 @@ public class KongAdminErrorDecoder implements ErrorDecoder {
             log.warn("io exception", ioE);
             return new RuntimeException(ioE);
         }
+
+        ObjectMapper objectMapper = new ObjectMapper();
         try {
+            Object error;
+            if (null != body) {
+                error = objectMapper.readValue(body, Object.class);
+            } else {
+                error = null;
+            }
+
             return new KongClientException(
                     "kong response error",
                     response.status(),
-                    gson.fromJson(body, Object.class)
-                    );
-
-        } catch (JsonSyntaxException jsonException) {
+                    error
+            );
+        } catch (JsonProcessingException e) {
             Map<String, String> errInfo = new HashMap<>(2);
             errInfo.put("details", body);
             return new KongClientException(

@@ -1,6 +1,6 @@
 package com.i2bgod.kong.model.admin.base;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,11 +21,11 @@ public class NodeStatus {
      * server : {"connections_writing":1,"total_requests":15,"connections_handled":15,"connections_accepted":15,"connections_reading":0,"connections_active":1,"connections_waiting":0}
      */
 
-    @SerializedName("database")
+    @JsonProperty("database")
     private DatabaseBean database;
-    @SerializedName("memory")
+    @JsonProperty("memory")
     private MemoryBean memory;
-    @SerializedName("server")
+    @JsonProperty("server")
     private ServerBean server;
 
     @NoArgsConstructor
@@ -35,7 +35,7 @@ public class NodeStatus {
          * reachable : true
          */
 
-        @SerializedName("reachable")
+        @JsonProperty("reachable")
         private Boolean reachable;
     }
 
@@ -47,9 +47,9 @@ public class NodeStatus {
          * lua_shared_dicts : {"kong_locks":{"allocated_slabs":"0.06 MiB","capacity":"8.00 MiB"},"kong_cassandra":{"allocated_slabs":"0.04 MiB","capacity":"5.00 MiB"},"kong":{"allocated_slabs":"0.04 MiB","capacity":"5.00 MiB"},"kong_process_events":{"allocated_slabs":"0.04 MiB","capacity":"5.00 MiB"},"kong_db_cache":{"allocated_slabs":"1.51 MiB","capacity":"256.00 MiB"},"kong_cluster_events":{"allocated_slabs":"0.04 MiB","capacity":"5.00 MiB"},"kong_db_cache_miss":{"allocated_slabs":"0.08 MiB","capacity":"12.00 MiB"},"prometheus_metrics":{"allocated_slabs":"0.04 MiB","capacity":"5.00 MiB"},"kong_healthchecks":{"allocated_slabs":"0.04 MiB","capacity":"5.00 MiB"},"kong_rate_limiting_counters":{"allocated_slabs":"0.08 MiB","capacity":"12.00 MiB"}}
          */
 
-        @SerializedName("lua_shared_dicts")
+        @JsonProperty("lua_shared_dicts")
         private Map<String, LuaSharedDictBean> luaSharedDicts;
-        @SerializedName("workers_lua_vms")
+        @JsonProperty("workers_lua_vms")
         private List<WorkersLuaVmsBean> workersLuaVms;
 
 
@@ -61,9 +61,9 @@ public class NodeStatus {
              * capacity : 8.00 MiB
              */
 
-            @SerializedName("allocated_slabs")
+            @JsonProperty("allocated_slabs")
             private String allocatedSlabs;
-            @SerializedName("capacity")
+            @JsonProperty("capacity")
             private String capacity;
         }
         @NoArgsConstructor
@@ -74,9 +74,9 @@ public class NodeStatus {
              * pid : 150
              */
 
-            @SerializedName("http_allocated_gc")
+            @JsonProperty("http_allocated_gc")
             private String httpAllocatedGc;
-            @SerializedName("pid")
+            @JsonProperty("pid")
             private Integer pid;
         }
     }
@@ -94,19 +94,19 @@ public class NodeStatus {
          * connections_waiting : 0
          */
 
-        @SerializedName("connections_writing")
+        @JsonProperty("connections_writing")
         private Integer connectionsWriting;
-        @SerializedName("total_requests")
+        @JsonProperty("total_requests")
         private Integer totalRequests;
-        @SerializedName("connections_handled")
+        @JsonProperty("connections_handled")
         private Integer connectionsHandled;
-        @SerializedName("connections_accepted")
+        @JsonProperty("connections_accepted")
         private Integer connectionsAccepted;
-        @SerializedName("connections_reading")
+        @JsonProperty("connections_reading")
         private Integer connectionsReading;
-        @SerializedName("connections_active")
+        @JsonProperty("connections_active")
         private Integer connectionsActive;
-        @SerializedName("connections_waiting")
+        @JsonProperty("connections_waiting")
         private Integer connectionsWaiting;
     }
 }

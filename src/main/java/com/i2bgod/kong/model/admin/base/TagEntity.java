@@ -1,6 +1,6 @@
 package com.i2bgod.kong.model.admin.base;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.i2bgod.kong.model.admin.base.annotation.KongEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,10 +22,10 @@ public class TagEntity {
      * tag : core
      */
 
-    @SerializedName("entity_name")
+    @JsonProperty("entity_name")
     private String entityName;
-    @SerializedName("entity_id")
+    @JsonProperty("entity_id")
     private String entityId;
-    @SerializedName("tag")
+    @JsonProperty("tag")
     private String tag;
 }

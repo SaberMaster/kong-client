@@ -1,6 +1,6 @@
 package com.i2bgod.kong.model.admin.base;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.i2bgod.kong.model.admin.base.annotation.KongEntity;
 import com.i2bgod.kong.model.admin.base.annotation.KongFK;
 import lombok.Data;
@@ -25,7 +25,7 @@ public class Sni extends TagBase{
      * certificate : {"id":"a2e013e8-7623-4494-a347-6d29108ff68b"}
      */
 
-    @SerializedName("certificate")
+    @JsonProperty("certificate")
     @KongFK
     private Certificate certificate;
 }

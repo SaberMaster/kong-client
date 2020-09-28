@@ -1,6 +1,6 @@
 package com.i2bgod.kong.model.admin.base;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.i2bgod.kong.model.admin.base.annotation.KongEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,25 +36,25 @@ public class Service extends TagBase {
      * ca_certificates : ["4e3ad2e4-0bc4-4638-8e34-c84a417ba39b","51e77dc2-8f3e-4afa-9d0e-0e3bbbcfd515"]
      */
 
-    @SerializedName("retries")
+    @JsonProperty("retries")
     private Integer retries;
-    @SerializedName("protocol")
+    @JsonProperty("protocol")
     private String protocol;
-    @SerializedName("host")
+    @JsonProperty("host")
     private String host;
-    @SerializedName("port")
+    @JsonProperty("port")
     private Integer port;
-    @SerializedName("path")
+    @JsonProperty("path")
     private String path;
-    @SerializedName("url")
+    @JsonProperty("url")
     private String url;
-    @SerializedName("connect_timeout")
+    @JsonProperty("connect_timeout")
     private Integer connectTimeout;
-    @SerializedName("write_timeout")
+    @JsonProperty("write_timeout")
     private Integer writeTimeout;
-    @SerializedName("read_timeout")
+    @JsonProperty("read_timeout")
     private Integer readTimeout;
-    @SerializedName("client_certificate")
+    @JsonProperty("client_certificate")
     private ClientCertificateBean clientCertificate;
 
     @NoArgsConstructor

@@ -1,8 +1,10 @@
 package com.i2bgod.kong.model.admin.base;
 
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.i2bgod.kong.model.adapter.DateLongFormatTypeAdapter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.i2bgod.kong.model.adapter.DateLongFormatDeserializer;
+import com.i2bgod.kong.model.adapter.DateLongFormatSerializer;
 import lombok.Data;
 
 import java.util.Date;
@@ -14,14 +16,16 @@ import java.util.Date;
 @Data
 public class Base {
 
-    @SerializedName("id")
+    @JsonProperty("id")
     private String id;
-    @SerializedName("name")
+    @JsonProperty("name")
     private String name;
-    @SerializedName("created_at")
-    @JsonAdapter(DateLongFormatTypeAdapter.class)
+    @JsonProperty("created_at")
+    @JsonSerialize(using = DateLongFormatSerializer.class)
+    @JsonDeserialize(using = DateLongFormatDeserializer.class)
     private Date createAt;
-    @SerializedName("updated_at")
-    @JsonAdapter(DateLongFormatTypeAdapter.class)
+    @JsonProperty("updated_at")
+    @JsonSerialize(using = DateLongFormatSerializer.class)
+    @JsonDeserialize(using = DateLongFormatDeserializer.class)
     private Date updateAt;
 }

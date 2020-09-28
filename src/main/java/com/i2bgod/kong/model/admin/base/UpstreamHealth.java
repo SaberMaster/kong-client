@@ -1,8 +1,11 @@
 package com.i2bgod.kong.model.admin.base;
 
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.i2bgod.kong.model.adapter.DateDoubleFormatTypeAdapter;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.i2bgod.kong.model.adapter.DateDoubleJsonDeserializer;
+import com.i2bgod.kong.model.adapter.DateDoubleJsonSerializer;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -25,11 +28,11 @@ public class UpstreamHealth {
      * data : [{"created_at":1485524883980,"id":"18c0ad90-f942-4098-88db-bbee3e43b27f","health":"HEALTHY","target":"127.0.0.1:20000","upstream_id":"07131005-ba30-4204-a29f-0927d53257b4","weight":100},{"created_at":1485524914883,"id":"6c6f34eb-e6c3-4c1f-ac58-4060e5bca890","health":"UNHEALTHY","target":"127.0.0.1:20002","upstream_id":"07131005-ba30-4204-a29f-0927d53257b4","weight":200}]
      */
 
-    @SerializedName("total")
+    @JsonProperty("total")
     private Integer total;
-    @SerializedName("node_id")
+    @JsonProperty("node_id")
     private String nodeId;
-    @SerializedName("data")
+    @JsonProperty("data")
     private List<TargetHealthBean> data;
 
     @NoArgsConstructor
@@ -45,18 +48,20 @@ public class UpstreamHealth {
          * weight : 100
          */
 
-        @SerializedName("id")
+        @JsonProperty("id")
         private String id;
-        @SerializedName("health")
+        @JsonProperty("health")
         private String health;
-        @SerializedName("target")
+        @JsonProperty("target")
         private String target;
-        @SerializedName("upstream_id")
+        @JsonProperty("upstream_id")
         private String upstreamId;
-        @SerializedName("weight")
+        @JsonProperty("weight")
         private Integer weight;
-        @SerializedName("created_at")
-        @JsonAdapter(DateDoubleFormatTypeAdapter.class)
+        @JsonProperty("created_at")
+        @JsonFormat(shape = JsonFormat.Shape.NUMBER)
+        @JsonSerialize(using = DateDoubleJsonSerializer.class)
+        @JsonDeserialize(using = DateDoubleJsonDeserializer.class)
         private Date createAt;
     }
 }

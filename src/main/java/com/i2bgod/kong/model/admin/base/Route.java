@@ -1,6 +1,6 @@
 package com.i2bgod.kong.model.admin.base;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.i2bgod.kong.model.admin.base.annotation.KongEntity;
 import com.i2bgod.kong.model.admin.base.annotation.KongFK;
 import lombok.Data;
@@ -38,27 +38,27 @@ public class Route extends TagBase{
      * service : {"id":"af8330d3-dbdc-48bd-b1be-55b98608834b"}
      */
 
-    @SerializedName("headers")
+    @JsonProperty("headers")
     private Map<String, List<String>> headers;
-    @SerializedName("https_redirect_status_code")
+    @JsonProperty("https_redirect_status_code")
     private Integer httpsRedirectStatusCode;
-    @SerializedName("regex_priority")
+    @JsonProperty("regex_priority")
     private Integer regexPriority;
-    @SerializedName("strip_path")
+    @JsonProperty("strip_path")
     private Boolean stripPath;
-    @SerializedName("path_handling")
+    @JsonProperty("path_handling")
     private String pathHandling;
-    @SerializedName("preserve_host")
+    @JsonProperty("preserve_host")
     private Boolean preserveHost;
-    @SerializedName("service")
+    @JsonProperty("service")
     @KongFK
     private Service service;
-    @SerializedName("protocols")
+    @JsonProperty("protocols")
     private List<String> protocols;
-    @SerializedName("methods")
+    @JsonProperty("methods")
     private List<String> methods;
-    @SerializedName("hosts")
+    @JsonProperty("hosts")
     private List<String> hosts;
-    @SerializedName("paths")
+    @JsonProperty("paths")
     private List<String> paths;
 }
